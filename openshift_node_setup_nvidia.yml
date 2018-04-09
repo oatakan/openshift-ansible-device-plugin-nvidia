@@ -22,6 +22,7 @@
         name: "{{ item }}"
         labels:
           openshift.com/gpu-accelerator: true
+      with_items: "{{ groups.nodes }}"
 
     #- name: label nodes
     #  command: oc label node --config='{{ oc_config_file_location }}' {{ item }} openshift.com/gpu-accelerator=true
