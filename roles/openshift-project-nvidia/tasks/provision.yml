@@ -65,7 +65,7 @@
     namespace: "{{ namespace }}"
     state: present
     node_selector:
-      openshift.com/gpu-accelerator: true
+      'openshift.com/gpu-accelerator': true
     spec_template_metadata_labels:
       name: "{{ application_name }}"
     spec_template_spec_priority_class_name: system-node-critical
