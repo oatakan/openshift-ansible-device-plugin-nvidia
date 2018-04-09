@@ -3,6 +3,7 @@
   roles:
     - nvidia-driver
     - nvidia-container-runtime-hook
+    - openshift-gpu-device-plugin
 
 - name: label nodes
   hosts: localhost
