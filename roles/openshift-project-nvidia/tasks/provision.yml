@@ -32,8 +32,6 @@
       - system:cluster-admins
       - system:nodes
       - system:masters
-    metadata:
-      name: "{{ application_name }}-scc"
     priority: 10
     read_only_root_filesystem: no
     run_as_user_type: RunAsAny
@@ -53,9 +51,6 @@
     name: "{{ application_name }}"
     namespace: "{{ namespace }}"
     state: present
-    metadata:
-      name: "{{ application_name }}"
-      namespace: "{{ namespace }}"
     spec_template_metadata_labels:
       name: "{{ application_name }}"
     spec_template_spec_priority_class_name: system-node-critical
