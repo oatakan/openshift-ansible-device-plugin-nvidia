@@ -24,6 +24,8 @@
         name: "{{ item }}"
         labels:
           openshift.com/gpu-accelerator: true
+      environment:
+        K8S_AUTH_KUBECONFIG: 'config'
       with_items: "{{ groups.nodes }}"
 
     #- name: label nodes
