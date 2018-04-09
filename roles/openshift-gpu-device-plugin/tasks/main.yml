@@ -11,11 +11,13 @@
   set_fact:
     node_config: "{{ node_config|combine(node_config_add_variable, recursive=True) }}"
 
-- debug:
-    msg: "{{ node_config }}"
-
 - name: write the updated node-config file
   template:
     src: node-config.yaml.j2
     dest: /etc/origin/node/node-config.yaml
-  backup: yes
+    backup: yes
+
+- name: restart openshift node
+  service:
+    name: atomic-openshift-node
+    state: restarted
