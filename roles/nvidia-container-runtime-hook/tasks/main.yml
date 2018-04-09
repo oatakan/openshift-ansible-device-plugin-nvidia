@@ -30,8 +30,8 @@
   docker_container:
     name: test-cuda-vector-add
     image: docker.io/mirrorgooglecontainers/cuda-vector-add:v0.1
-    auto_remove: yes
-    #interactive: yes
+    #auto_remove: yes
+    interactive: yes
     detach: no
   register: cuda_vector_add_container
 
