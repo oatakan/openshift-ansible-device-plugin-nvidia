@@ -32,6 +32,7 @@
     image: docker.io/mirrorgooglecontainers/cuda-vector-add:v0.1
     state: started
     recreate: yes
+    restart: yes
     #auto_remove: yes
     interactive: yes
     detach: no
