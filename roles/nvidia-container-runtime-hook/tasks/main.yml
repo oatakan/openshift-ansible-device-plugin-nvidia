@@ -1,0 +1,45 @@
+---
+- name: install nvidia-container-runtime repo
+  get_url:
+    url: "{{ nvidia_container_runtime_repo_url }}"
+    dest: /etc/yum.repos.d/nvidia-container-runtime.repo
+
+- name: install nvidia-container-runtime-hook
+  yum:
+    name: nvidia-container-runtime-hook
+    state: present
+
+- name: copy oci-nvidia-hook
+  copy:
+    src: oci-nvidia-hook
+    dest: /usr/libexec/oci/hooks.d/oci-nvidia-hook
+    mode: u+rwx
+
+- name: copy oci-nvidia-hook.json
+  copy:
+    src: oci-nvidia-hook.json
+    dest: /usr/share/containers/oci/hooks.d/oci-nvidia-hook.json
+
+- name: selinux set context for nvidia files
+  sefcontext:
+    target: '/dev/nvidia*'
+    setype: svirt_sandbox_file_t
+    state: present
+
+- name: test cuda-vector-add container
+  docker_container:
+    name: test-cuda-vector-add
+    image: docker.io/mirrorgooglecontainers/cuda-vector-add:v0.1
+    auto_remove: yes
+    interactive: yes
+    detach: no
+  register: cuda_vector_add_container
+
+- name: debug cuda_vector_add_container output
+  debug:
+    var: cuda_vector_add_container.stdout
+
+- name: fail if not the expected output
+  fail:
+    msg: "nvidia-container-runtime is not installed successfully."
+  when: "Test PASSED" not in cuda_vector_add_container.stdout

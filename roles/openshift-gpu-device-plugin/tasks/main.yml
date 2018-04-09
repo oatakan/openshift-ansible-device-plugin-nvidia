@@ -1,0 +1,15 @@
+- name: read node-config.yaml
+  slurp:
+    src: /etc/origin/node/node-config.yaml
+  register: node_config_file
+
+- name: set node_config variable
+  set_fact:
+    node_config: "{{ node_config_file['content'] | b64decode | from_yaml }}"
+
+- name: add to kubuletarguments to node-config
+  set_fact:
+    node_config.kubeletArguments: "{{ node_config.kubeletArguments }} + {{ kubeletArguments }}"
+
+- debug:
+    msg: "{{ node_config }}"

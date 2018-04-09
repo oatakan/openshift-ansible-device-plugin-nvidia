@@ -1,0 +1,4 @@
+---
+kubeletArguments:
+  feature-gates:
+  - DevicePlugins=true

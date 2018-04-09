@@ -1,0 +1,4 @@
+{
+   "hook": "/usr/bin/nvidia-container-runtime-hook",
+   "stage": [ "prestart" ]
+}
