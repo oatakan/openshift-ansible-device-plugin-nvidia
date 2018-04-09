@@ -42,4 +42,4 @@
 - name: fail if not the expected output
   fail:
     msg: "nvidia-container-runtime is not installed successfully."
-  when: ("Test PASSED" not in cuda_vector_add_container.stdout)
+  when: (cuda_vector_add_container.stdout is defined) and ("Test PASSED" not in cuda_vector_add_container.stdout)
