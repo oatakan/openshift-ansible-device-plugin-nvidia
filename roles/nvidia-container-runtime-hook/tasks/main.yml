@@ -37,9 +37,15 @@
 
 - name: debug cuda_vector_add_container output
   debug:
-    var: cuda_vector_add_container
+    var: cuda_vector_add_container.Output
+
+- name: remove test cuda-vector-add container
+  docker_container:
+    name: "{{ cuda_vector_add_container.Id }}"
+    state: absent
+  when: (cuda_vector_add_container is success) and (cuda_vector_add_container.Id is defined)
 
 - name: fail if not the expected output
   fail:
     msg: "nvidia-container-runtime is not installed successfully."
-  when: (cuda_vector_add_container.stdout is defined) and ("Test PASSED" not in cuda_vector_add_container.stdout)
+  when: (cuda_vector_add_container.Output is defined) and ("Test PASSED" not in cuda_vector_add_container.Output)
