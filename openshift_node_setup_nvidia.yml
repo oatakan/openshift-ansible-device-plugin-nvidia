@@ -1,4 +1,4 @@
-- hosts: skip
+- hosts: nodes
   become: yes
   roles:
     - nvidia-driver
@@ -19,16 +19,16 @@
       install_python_requirements: no
 
   post_tasks:
-    - name: label nodes
-      k8s_v1_node:
-        name: "{{ item }}"
-        labels:
-          openshift.com/gpu-accelerator=true
-      environment:
-        K8S_AUTH_KUBECONFIG: 'config'
-      with_items: "{{ groups.nodes }}"
-
     #- name: label nodes
-    #  command: oc label node --config='{{ oc_config_file_location }}' {{ item }} openshift.com/gpu-accelerator=true
+    #  k8s_v1_node:
+    #    name: "{{ item }}"
+    #    labels:
+    #      openshift.com/gpu-accelerator=true
+    #  environment:
+    #    K8S_AUTH_KUBECONFIG: 'config'
     #  with_items: "{{ groups.nodes }}"
-    #  when: (hostvars[item].cuda_vector_add_container is defined) and ("Test PASSED" in hostvars[item].cuda_vector_add_container.ansible_facts.docker_container.Output)
+
+    - name: label nodes
+      command: oc label node --config='{{ oc_config_file_location }}' --overwrite=true {{ item }} openshift.com/gpu-accelerator=true
+      with_items: "{{ groups.nodes }}"
+      when: (hostvars[item].cuda_vector_add_container is defined) and ("Test PASSED" in hostvars[item].cuda_vector_add_container.ansible_facts.docker_container.Output)
