@@ -37,7 +37,7 @@
 
 - name: debug cuda_vector_add_container output
   debug:
-    var: cuda_vector_add_container.Output
+    var: cuda_vector_add_container
 
 - name: remove test cuda-vector-add container
   docker_container:
