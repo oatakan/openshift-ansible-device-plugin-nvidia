@@ -64,6 +64,8 @@
     name: "{{ application_name }}"
     namespace: "{{ namespace }}"
     state: present
+    selector:
+      app: '{{ application_name }}'
     spec_template_metadata_labels:
       name: "{{ application_name }}"
     spec_template_spec_priority_class_name: system-node-critical
