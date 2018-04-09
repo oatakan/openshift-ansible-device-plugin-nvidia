@@ -30,6 +30,7 @@
   docker_container:
     name: test-cuda-vector-add
     image: docker.io/mirrorgooglecontainers/cuda-vector-add:v0.1
+    state: started
     recreate: yes
     #auto_remove: yes
     interactive: yes
