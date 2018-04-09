@@ -36,7 +36,7 @@
 
 - name: debug cuda_vector_add_container output
   debug:
-    var: cuda_vector_add_container.stdout
+    var: cuda_vector_add_container
 
 - name: fail if not the expected output
   fail:
