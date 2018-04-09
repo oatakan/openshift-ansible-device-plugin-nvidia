@@ -1,4 +1,5 @@
 ---
-kubeletArguments:
-  feature-gates:
-  - DevicePlugins=true
+node_config_add_variable:
+  kubeletArguments:
+    feature-gates:
+    - DevicePlugins=true
