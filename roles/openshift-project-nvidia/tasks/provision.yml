@@ -64,7 +64,7 @@
     name: "{{ application_name }}"
     namespace: "{{ namespace }}"
     state: present
-    spec_template_spec_node_selector:
+    selector_match_expressions:
       - key: openshift.com/gpu-accelerator
         operator: Exists
     spec_template_metadata_labels:
