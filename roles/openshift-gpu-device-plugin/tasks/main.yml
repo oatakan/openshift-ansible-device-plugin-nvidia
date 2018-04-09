@@ -9,7 +9,7 @@
 
 - name: add to kubuletarguments to node-config
   set_fact:
-    node_config.kubeletArguments: "{{ node_config.kubeletArguments }} + {{ kubeletArguments }}"
+    node_config: "{{ node_config_file|combine(kubeletArguments, recursive=True) }}"
 
 - debug:
     msg: "{{ node_config }}"
