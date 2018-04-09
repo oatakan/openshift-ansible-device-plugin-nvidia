@@ -29,7 +29,7 @@
     state: present
 
 - name: load NVIDIA and unified memory kernel modules
-  command: nvidia-modprobe && nvidia-modprobe -u
+  shell: nvidia-modprobe && nvidia-modprobe -u
 
 - name: check if the installation and drivers are working
   shell: nvidia-smi --query-gpu=gpu_name --format=csv,noheader --id=0 | sed -e 's/ /-/g'
