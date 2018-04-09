@@ -20,4 +20,4 @@
     - name: label nodes
       command: oc label node --config='{{ oc_config_file_location }}' {{ item }} openshift.com/gpu-accelerator=true
       with_items: "{{ groups.nodes }}"
-      when: (item.cuda_vector_add_container is defined) and (item.cuda_vector_add_container is success)
+      when: (item.cuda_vector_add_container is success)

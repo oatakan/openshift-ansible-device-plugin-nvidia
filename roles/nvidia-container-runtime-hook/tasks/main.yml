@@ -30,6 +30,8 @@
   docker_container:
     name: test-cuda-vector-add
     image: docker.io/mirrorgooglecontainers/cuda-vector-add:v0.1
+    state: present
+    recreate: yes
     #auto_remove: yes
     interactive: yes
     detach: no
@@ -37,14 +39,14 @@
 
 - name: debug cuda_vector_add_container output
   debug:
-    var: cuda_vector_add_container
+    var: cuda_vector_add_container.ansible_facts.docker_container.Output
 
 - name: remove test cuda-vector-add container
   docker_container:
-    name: "{{ cuda_vector_add_container.Id | default('test-cuda-vector-add') }}"
+    name: "{{ cuda_vector_add_container.ansible_facts.docker_container.Id | default('test-cuda-vector-add') }}"
     state: absent
 
 - name: fail if not the expected output
   fail:
     msg: "nvidia-container-runtime is not installed successfully."
-  when: (cuda_vector_add_container.Output is defined) and ("Test PASSED" not in cuda_vector_add_container.Output)
+  when: (cuda_vector_add_container.ansible_facts.docker_container.Output is defined) and ("Test PASSED" not in cuda_vector_add_container.ansible_facts.docker_container.Output)
