@@ -22,8 +22,6 @@
     - name: label nodes
       k8s_v1_node:
         name: "{{ item }}"
-        labels:
-          gpu: true
       environment:
         K8S_AUTH_KUBECONFIG: 'config'
       with_items: "{{ groups.nodes }}"
