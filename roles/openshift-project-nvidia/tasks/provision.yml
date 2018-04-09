@@ -57,6 +57,7 @@
 
 - name: create scc
   command: "oc create --config='{{ oc_config_file_location }}' -f {{ scc_object_path }} -n {{ namespace }}"
+  ignore_errors: yes
 
 - name: deploy daemonset
   k8s_v1beta1_daemon_set:
