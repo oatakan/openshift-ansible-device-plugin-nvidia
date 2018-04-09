@@ -5,11 +5,11 @@
 
 - name: set node_config variable
   set_fact:
-    node_config: "{{ node_config_file['content'] | b64decode }}"
+    node_config: "{{ node_config_file['content'] | b64decode | from_yaml }}"
 
 - name: add to kubuletarguments to node-config
   set_fact:
-    node_config: "{{ node_config_file|combine(kubeletArguments, recursive=True) }}"
+    node_config: "{{ node_config|combine(kubeletArguments, recursive=True) }}"
 
 - debug:
     msg: "{{ node_config }}"
