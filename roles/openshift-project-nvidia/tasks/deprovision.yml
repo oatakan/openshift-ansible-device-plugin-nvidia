@@ -4,18 +4,24 @@
     name: "{{ application_name }}"
     namespace: "{{ namespace }}"
     state: absent
+  environment:
+    K8S_AUTH_KUBECONFIG: 'config'
 
 - name: remove scc
   openshift_v1_security_context_constraints:
     name: "{{ application_name }}"
     namespace: "{{ namespace }}"
     state: absent
+  environment:
+    K8S_AUTH_KUBECONFIG: 'config'
 
 - name: remove ServiceAccount
   k8s_v1_service_account:
     name: "{{ application_name }}"
     namespace: "{{ namespace }}"
     state: absent
+  environment:
+    K8S_AUTH_KUBECONFIG: 'config'
 
 - name: remove project
   openshift_v1_project:

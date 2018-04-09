@@ -11,6 +11,8 @@
     name: "{{ application_name }}"
     namespace: "{{ namespace }}"
     state: present
+  environment:
+    K8S_AUTH_KUBECONFIG: 'config'
 
 - name: create scc
   openshift_v1_security_context_constraints:
@@ -46,6 +48,8 @@
       - system:serviceaccount:nvidia:nvidia-deviceplugin
     volumes:
       - '*'
+  environment:
+    K8S_AUTH_KUBECONFIG: 'config'
 
 - name: deploy daemonset
   k8s_v1beta1_daemon_set:
@@ -75,3 +79,5 @@
       - name: device-plugin
         host_path:
           path: /var/lib/kubelet/device-plugins
+  environment:
+    K8S_AUTH_KUBECONFIG: 'config'
