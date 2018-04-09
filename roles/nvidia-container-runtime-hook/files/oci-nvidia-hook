@@ -1,2 +1,2 @@
 #!/bin/bash
-/usr/bin/nvidia-container-runtime-hook $1
+PATH=/usr/bin /usr/bin/nvidia-container-runtime-hook $1
