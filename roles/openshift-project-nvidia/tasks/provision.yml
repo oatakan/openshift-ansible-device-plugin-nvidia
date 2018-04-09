@@ -19,12 +19,12 @@
     name: "{{ application_name }}"
     namespace: "{{ namespace }}"
     state: present
-    allow_host_dir_volume_plugin: yes
-    allow_host_ipc: yes
-    allow_host_network: yes
-    allow_host_pid: yes
-    allow_host_ports: yes
-    allow_privileged_container: yes
+    allow_host_dir_volume_plugin: true
+    allow_host_ipc: true
+    allow_host_network: true
+    allow_host_pid: true
+    allow_host_ports: true
+    allow_privileged_container: true
     allowed_capabilities:
       - '*'
     fs_group_type: RunAsAny
@@ -33,7 +33,7 @@
       - system:nodes
       - system:masters
     priority: 10
-    read_only_root_filesystem: no
+    read_only_root_filesystem: false
     run_as_user_type: RunAsAny
     se_linux_context_type: RunAsAny
     seccomp_profiles:
