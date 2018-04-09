@@ -43,9 +43,8 @@
 
 - name: remove test cuda-vector-add container
   docker_container:
-    name: "{{ cuda_vector_add_container.Id }}"
+    name: "{{ cuda_vector_add_container.Id | default('test-cuda-vector-add') }}"
     state: absent
-  when: (cuda_vector_add_container is success) and (cuda_vector_add_container.Id is defined)
 
 - name: fail if not the expected output
   fail:
