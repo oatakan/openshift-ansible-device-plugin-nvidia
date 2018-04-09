@@ -23,7 +23,7 @@
       k8s_v1_node:
         name: "{{ item }}"
         labels:
-          openshift.com/gpu-accelerator: true
+          gpu: true
       environment:
         K8S_AUTH_KUBECONFIG: 'config'
       with_items: "{{ groups.nodes }}"
