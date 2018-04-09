@@ -37,6 +37,27 @@
     detach: no
   register: cuda_vector_add_container
 
+- name: debug 0
+  debug:
+    var: cuda_vector_add_container
+
+- name: debug 1
+  debug:
+    var: cuda_vector_add_container.ansible_facts
+
+- name: debug 2
+  debug:
+    var: cuda_vector_add_container.ansible_facts.docker_container
+
+- name: debug 3
+  debug:
+    var: cuda_vector_add_container.docker_container
+
+- name: debug 3
+  debug:
+    var: cuda_vector_add_container.docker_container.Output
+
+
 - name: debug cuda_vector_add_container output
   debug:
     var: cuda_vector_add_container.ansible_facts.docker_container.Output
