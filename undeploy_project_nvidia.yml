@@ -1,0 +1,11 @@
+- name: set up authentication and project
+  hosts: localhost
+  gather_facts: false
+  connection: local
+
+  roles:
+    - oatakan.openshift-add-auth-config
+    - role: ansible.kubernetes-modules
+      install_python_requirements: no
+    - role: openshift-project-nvidia
+      action: deprovision
