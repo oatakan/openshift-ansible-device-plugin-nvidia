@@ -5,7 +5,7 @@
 
 - name: set node_config variable
   set_fact:
-    node_config: "{{ node_config_file['content'] | b64decode | from_yaml }}"
+    node_config: "{{ node_config_file['content'] | b64decode }}"
 
 - name: add to kubuletarguments to node-config
   set_fact:
