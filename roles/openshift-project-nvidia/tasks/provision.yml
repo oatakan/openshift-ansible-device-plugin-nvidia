@@ -70,9 +70,9 @@
       name: "{{ application_name }}"
     spec_template_spec_priority_class_name: system-node-critical
     spec_template_spec_affinity_node_affinity_required_during_scheduling_ignored_during_execution_node_selector_terms:
-      - match_expressions:
-          - key: openshift.com/gpu-accelerator
-            operator: Exists
+      - matchExpressions:
+        - key: openshift.com/gpu-accelerator
+          operator: Exists
     spec_template_spec_service_account: "{{ application_name }}"
     spec_template_spec_service_account_name: "{{ application_name }}"
     spec_template_spec_host_network: yes
