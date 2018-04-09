@@ -17,4 +17,5 @@
 - name: write the updated node-config file
   template:
     src: node-config.yaml.j2
-    dest: /etc/origin/node/node-config.yaml.new
+    dest: /etc/origin/node/node-config.yaml
+  backup: yes
