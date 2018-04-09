@@ -9,6 +9,7 @@
   hosts: localhost
   gather_facts: false
   connection: local
+  become: no
 
   roles:
     - oatakan.openshift-add-auth-config
