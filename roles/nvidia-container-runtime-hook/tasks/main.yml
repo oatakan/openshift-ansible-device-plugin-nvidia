@@ -16,6 +16,7 @@
     dest: /etc/yum.repos.d/nvidia-container-runtime.repo
     regexp: repo_gpgcheck
     line: repo_gpgcheck=0
+    backrefs: yes
 
 - name: install nvidia-container-runtime-hook
   yum:
