@@ -12,13 +12,10 @@
   with_items: "{{ nvidia_container_runtime_repo_keys }}"
 
 - name: disable gpg key check on the nvidia repo
-  yum_repository:
-    name: "{{ item }}"
-    state: present
-    repo_gpgcheck: no
-  with_items:
-    - libnvidia-container
-    - nvidia-container-runtime
+  lineinfile:
+    dest: /etc/yum.repos.d/nvidia-container-runtime.repo
+    regexp: repo_gpgcheck
+    line: repo_gpgcheck=0
 
 - name: install nvidia-container-runtime-hook
   yum:
