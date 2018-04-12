@@ -7,13 +7,17 @@
   environment:
     K8S_AUTH_KUBECONFIG: 'config'
 
+#- name: remove scc
+#  openshift_v1_security_context_constraints:
+#    name: "{{ application_name }}"
+#    namespace: "{{ namespace }}"
+#    state: absent
+#  environment:
+#    K8S_AUTH_KUBECONFIG: 'config'
+
 - name: remove scc
-  openshift_v1_security_context_constraints:
-    name: "{{ application_name }}"
-    namespace: "{{ namespace }}"
-    state: absent
-  environment:
-    K8S_AUTH_KUBECONFIG: 'config'
+  command: "oc delete scc --config='{{ oc_config_file_location }}' "{{ application_name }}" -n {{ namespace }}"
+  ignore_errors: yes
 
 - name: remove ServiceAccount
   k8s_v1_service_account:
