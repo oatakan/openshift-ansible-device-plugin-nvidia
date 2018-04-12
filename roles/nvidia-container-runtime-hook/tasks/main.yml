@@ -38,6 +38,7 @@
     target: '/dev/nvidia*'
     setype: svirt_sandbox_file_t
     state: present
+    reload: yes
   when: ansible_distribution_version is version('7.5', '<')
 
 - name: selinux set context for nvidia files
@@ -45,6 +46,7 @@
     target: '/dev/nvidia*'
     setype: container_file_t
     state: present
+    reload: yes
   when: ansible_distribution_version is version('7.5', '>=')
 
 - name: test cuda-vector-add container
