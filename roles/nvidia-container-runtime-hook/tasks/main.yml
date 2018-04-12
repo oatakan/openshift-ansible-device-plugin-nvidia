@@ -4,11 +4,21 @@
     url: "{{ nvidia_container_runtime_repo_url }}"
     dest: /etc/yum.repos.d/nvidia-container-runtime.repo
 
+# this doesn't seem to work
 - name: import nvidia repo key
   rpm_key:
     state: present
     key: "{{ item }}"
   with_items: "{{ nvidia_container_runtime_repo_keys }}"
+
+- name: disable gpg key check on the nvidia repo
+  yum_repository:
+    name: "{{ item }}"
+    state: present
+    repo_gpgcheck: no
+  with_items:
+    - libnvidia-container
+    - nvidia-container-runtime
 
 - name: install nvidia-container-runtime-hook
   yum:
