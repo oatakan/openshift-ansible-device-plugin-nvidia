@@ -6,7 +6,7 @@
     - openshift-gpu-device-plugin
 
 - name: add cluster admin user
-  hosts: master
+  hosts: masters
   become: yes
   tasks:
     - name: assign cluster admin role to admin user
