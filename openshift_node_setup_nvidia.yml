@@ -5,6 +5,13 @@
     - nvidia-container-runtime-hook
     - openshift-gpu-device-plugin
 
+- name: add cluster admin user
+  hosts: master
+  become: yes
+  tasks:
+    - name: assign cluster admin role to admin user
+      command: oc adm policy add-cluster-role-to-user cluster-admin admin
+
 - name: label nodes
   hosts: localhost
   gather_facts: false
@@ -19,6 +26,8 @@
       install_python_requirements: no
 
   post_tasks:
+    - name: assign cluster admin role to admin user
+      command:
     #- name: label nodes
     #  k8s_v1_node:
     #    name: "{{ item }}"
