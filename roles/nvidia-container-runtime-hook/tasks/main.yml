@@ -4,6 +4,11 @@
     url: "{{ nvidia_container_runtime_repo_url }}"
     dest: /etc/yum.repos.d/nvidia-container-runtime.repo
 
+- name: import nvidia repo key
+  rpm_key:
+    state: present
+    key: https://nvidia.github.io/libnvidia-container/gpgkey
+
 - name: install nvidia-container-runtime-hook
   yum:
     name: nvidia-container-runtime-hook
