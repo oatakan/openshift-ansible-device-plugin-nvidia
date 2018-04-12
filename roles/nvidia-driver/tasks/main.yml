@@ -9,6 +9,9 @@
     state: present
   ignore_errors: true
 
+- debug:
+    var: ansible_distribution_major_version
+
 - name: install nvidia drivers
   yum:
     name: "{{ nvidia_driver_rpm_url }}"
