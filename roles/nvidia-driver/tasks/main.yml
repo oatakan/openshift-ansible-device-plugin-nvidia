@@ -23,7 +23,7 @@
     - xorg-x11-drv-nvidia
     - xorg-x11-drv-nvidia-devel
 
-- name: add nouveau kernel module
+- name: remove nouveau kernel module
   modprobe:
     name: nouveau
     state: absent
