@@ -23,10 +23,13 @@
     - xorg-x11-drv-nvidia
     - xorg-x11-drv-nvidia-devel
 
+#- name: remove nouveau kernel module
+#  modprobe:
+#    name: nouveau
+#    state: absent
+
 - name: remove nouveau kernel module
-  modprobe:
-    name: nouveau
-    state: absent
+  command: modprobe -r nouveau
 
 - name: load NVIDIA and unified memory kernel modules
   shell: nvidia-modprobe && nvidia-modprobe -u
