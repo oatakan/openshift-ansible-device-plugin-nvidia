@@ -29,7 +29,7 @@
 #    state: absent
 
 - name: remove nouveau kernel module
-  command: modprobe -r nouveau
+  shell: modprobe -r nouveau
 
 - name: load NVIDIA and unified memory kernel modules
   shell: nvidia-modprobe && nvidia-modprobe -u
