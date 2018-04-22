@@ -23,16 +23,26 @@
     - xorg-x11-drv-nvidia
     - xorg-x11-drv-nvidia-devel
 
+- name: reboot the system
+  become: yes
+  shell: "sleep 2 && shutdown -r now 'Rebooting (Ansible kernel update)'"
+  async: 1
+  poll: 0
+  ignore_errors: True
+
+- name: wait for server to reboot
+  wait_for_connection:
+
 #- name: remove nouveau kernel module
 #  modprobe:
 #    name: nouveau
 #    state: absent
 
-- name: remove nouveau kernel module
-  shell: modprobe -r nouveau
+#- name: remove nouveau kernel module
+#  shell: modprobe -r nouveau
 
-- name: load NVIDIA and unified memory kernel modules
-  shell: nvidia-modprobe && nvidia-modprobe -u
+#- name: load NVIDIA and unified memory kernel modules
+#  shell: nvidia-modprobe && nvidia-modprobe -u
 
 - name: check if the installation and drivers are working
   shell: nvidia-smi --query-gpu=gpu_name --format=csv,noheader --id=0 | sed -e 's/ /-/g'
