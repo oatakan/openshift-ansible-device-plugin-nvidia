@@ -57,6 +57,9 @@
   shell: chcon -t container_file_t /dev/nvidia*
   when: ansible_distribution_version is version('7.5', '>=')
 
+- name: restore selinux
+  shell: nvidia-container-cli -k list | restorecon -v -f -
+
 - name: test cuda-vector-add container
   docker_container:
     name: test-cuda-vector-add
