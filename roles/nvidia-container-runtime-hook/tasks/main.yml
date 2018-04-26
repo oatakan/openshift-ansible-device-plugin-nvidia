@@ -50,11 +50,11 @@
 #  when: ansible_distribution_version is version('7.5', '>=')
 
 - name: selinux set context for nvidia files
-  command: chcon -t svirt_sandbox_file_t  /dev/nvidia*
+  shell: chcon -t svirt_sandbox_file_t /dev/nvidia*
   when: ansible_distribution_version is version('7.5', '<')
 
 - name: selinux set context for nvidia files
-  command: chcon -t container_file_t  /dev/nvidia*
+  shell: chcon -t container_file_t /dev/nvidia*
   when: ansible_distribution_version is version('7.5', '>=')
 
 - name: test cuda-vector-add container
