@@ -7,15 +7,15 @@ allowHostPID: true
 allowHostPorts: true
 allowPrivilegedContainer: true
 allowedCapabilities:
-- '*'
+  - "*"
 allowedFlexVolumes: true
 defaultAddCapabilities: null
 fsGroup:
   type: RunAsAny
 groups:
-- system:cluster-admins
-- system:nodes
-- system:masters
+  - system:cluster-admins
+  - system:nodes
+  - system:masters
 metadata:
   annotations:
     kubernetes.io/description: anyuid provides all features of the restricted SCC
@@ -30,10 +30,10 @@ runAsUser:
 seLinuxContext:
   type: RunAsAny
 seccompProfiles:
-- '*'
+  - '*'
 supplementalGroups:
   type: RunAsAny
 users:
-- system:serviceaccount:nvidia:"{{ application_name }}"
+  - system:serviceaccount:nvidia:"{{ application_name }}"
 volumes:
-- '*'
+  - '*'
