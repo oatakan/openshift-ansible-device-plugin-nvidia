@@ -46,57 +46,38 @@
 #  environment:
 #    K8S_AUTH_KUBECONFIG: 'config'
 
-#- name: process scc object template
-#  template:
-#    src: scc.yaml.j2
-#    dest: "/tmp/scc.yml"
-#  register: scc_object
+- name: process scc object template
+  template:
+    src: scc.yaml.j2
+    dest: "/tmp/scc.yml"
+  register: scc_object
 
-#- set_fact:
-#    scc_object_path: "{{ scc_object.dest | default(scc_object.path) }}"
+- set_fact:
+    scc_object_path: "{{ scc_object.dest | default(scc_object.path) }}"
 
-#- name: create scc
-#  command: "oc create --config='{{ oc_config_file_location }}' -f {{ scc_object_path }} -n {{ namespace }}"
-#  ignore_errors: yes
+- name: create scc
+  command: "oc create --config='{{ oc_config_file_location }}' -f {{ scc_object_path }} -n {{ namespace }}"
+  ignore_errors: yes
 
-#- name: deploy daemonset
-#  k8s_v1beta1_daemon_set:
-#    name: "{{ application_name }}"
-#    namespace: "{{ namespace }}"
-#    state: present
-#    spec_template_metadata_labels:
-#      name: "{{ application_name }}"
-#    spec_template_spec_priority_class_name: system-node-critical
-#    spec_template_spec_affinity_node_affinity_required_during_scheduling_ignored_during_execution_node_selector_terms:
-#      - matchExpressions:
-#        - key: openshift.com/gpu-accelerator
-#          operator: Exists
-#    spec_template_spec_service_account: "{{ application_name }}"
-#    spec_template_spec_service_account_name: "{{ application_name }}"
-#    spec_template_spec_host_network: yes
-#    spec_template_spec_host_pid: yes
-#    containers:
-#      - image: "{{ container_image_name }}"
-#        name: "{{ application_name }}"
-#        privileged: yes
-#        volume_mounts:
-#          - mount_path: /var/lib/kubelet/device-plugins
-#            name: device-plugin
-#    volumes:
-#      - name: device-plugin
-#        host_path:
-#          path: /var/lib/kubelet/device-plugins
-#  environment:
-#    K8S_AUTH_KUBECONFIG: 'config'
 
-- name: deploy scc and daemonset
-  openshift_raw:
+- name: deploy scc
+  k8s_raw:
     name: "{{ application_name }}"
     namespace: "{{ namespace }}"
     state: present
     definition: "{{ lookup('template', item) | from_yaml }}"
   with_items:
     - scc.yml
+  environment:
+    K8S_AUTH_KUBECONFIG: 'config'
+
+- name: deploy daemonset
+  openshift_raw:
+    name: "{{ application_name }}"
+    namespace: "{{ namespace }}"
+    state: present
+    definition: "{{ lookup('template', item) | from_yaml }}"
+  with_items:
     - daemon_set.yml
   environment:
     K8S_AUTH_KUBECONFIG: 'config'
