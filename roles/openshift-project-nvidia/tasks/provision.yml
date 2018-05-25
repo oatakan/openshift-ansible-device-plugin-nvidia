@@ -95,7 +95,7 @@
     namespace: "{{ namespace }}"
     state: present
     resource_definition:
-      apiVersion: extensions/v1beta1
+      apiVersion: v1
       kind: DaemonSet
       metadata:
         name: nvidia-device-plugin-daemonset
