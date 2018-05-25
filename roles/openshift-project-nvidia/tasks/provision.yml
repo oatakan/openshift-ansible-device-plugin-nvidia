@@ -90,12 +90,12 @@
 #    K8S_AUTH_KUBECONFIG: 'config'
 
 - name: deploy daemonset
-  openshift_raw:
+  k8s_raw:
     name: "{{ application_name }}"
     namespace: "{{ namespace }}"
     state: present
     resource_definition:
-      apiVersion: v1
+      apiVersion: extensions/v1beta1
       kind: DaemonSet
       metadata:
         name: "{{ application_name }}"
