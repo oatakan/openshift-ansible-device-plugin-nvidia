@@ -78,7 +78,7 @@
     containers:
       - image: "{{ container_image_name }}"
         name: "{{ application_name }}"
-        security_context_priviliged: yes
+        privileged: yes
         volume_mounts:
           - mount_path: /var/lib/kubelet/device-plugins
             name: device-plugin
