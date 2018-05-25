@@ -102,7 +102,8 @@
         namespace: "{{ namespace }}"
       spec:
         selector:
-          name: '{{ application_name }}'
+          matchLabels:
+            name: '{{ application_name }}'
         template:
           metadata:
             labels:
