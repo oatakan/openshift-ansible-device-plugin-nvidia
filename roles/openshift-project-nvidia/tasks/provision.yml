@@ -95,7 +95,7 @@
     namespace: "{{ namespace }}"
     state: present
     resource_definition:
-      apiVersion: extensions/v1beta1
+      apiVersion: apps/v1
       kind: DaemonSet
       metadata:
         name: "{{ application_name }}"
