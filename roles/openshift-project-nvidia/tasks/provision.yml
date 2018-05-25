@@ -101,12 +101,12 @@
         name: "{{ application_name }}"
         namespace: "{{ namespace }}"
       spec:
+        selector:
+          name: '{{ application_name }}'
         template:
           metadata:
             labels:
               name: "{{ application_name }}"
-          selector:
-            name: '{{ application_name }}'
           spec:
             priorityClassName: system-node-critical
             affinity:
