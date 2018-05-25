@@ -49,7 +49,7 @@
 - name: process scc object template
   template:
     src: scc.yaml.j2
-    dest: "/tmp/scc.yaml"
+    dest: "/tmp/scc.yml"
   register: scc_object
 
 - set_fact:
@@ -78,6 +78,8 @@
     containers:
       - image: "{{ container_image_name }}"
         name: "{{ application_name }}"
+        security_context:
+          priviliged: yes
         volume_mounts:
           - mount_path: /var/lib/kubelet/device-plugins
             name: device-plugin
