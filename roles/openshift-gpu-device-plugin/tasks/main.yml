@@ -21,6 +21,9 @@
   command: systemctl status origin-node
   register: origin_node
 
+- debug:
+    var: origin_node
+
 - name: restart openshift node
   service:
     name: atomic-openshift-node
