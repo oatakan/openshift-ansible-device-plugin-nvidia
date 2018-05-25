@@ -14,42 +14,10 @@
   environment:
     K8S_AUTH_KUBECONFIG: 'config'
 
-#- name: create scc
-#  openshift_v1_security_context_constraints:
-#    name: "{{ application_name }}"
-#    namespace: "{{ namespace }}"
-#    state: present
-#    allow_host_dir_volume_plugin: True
-#    allow_host_ipc: True
-#    allow_host_network: True
-#    allow_host_pid: True
-#    allow_host_ports: True
-#    allow_privileged_container: True
-#    allowed_capabilities:
-#      - '*'
-#    fs_group_type: RunAsAny
-#    groups:
-#      - system:cluster-admins
-#      - system:nodes
-#      - system:masters
-#    priority: 10
-#    read_only_root_filesystem: False
-#    run_as_user_type: RunAsAny
-#    se_linux_context_type: RunAsAny
-#    seccomp_profiles:
-#      - '*'
-#    supplemental_groups_type: RunAsAny
-#    users:
-#      - system:serviceaccount:nvidia:nvidia-deviceplugin
-#    volumes:
-#      - '*'
-#  environment:
-#    K8S_AUTH_KUBECONFIG: 'config'
-
 - name: process scc object template
   template:
-    src: scc.yml
-    dest: "/tmp/scc.yml.j2"
+    src: scc.yml.j2
+    dest: "/tmp/scc.yml"
   register: scc_object
 
 - set_fact:

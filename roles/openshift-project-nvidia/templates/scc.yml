@@ -34,6 +34,6 @@ seccompProfiles:
 supplementalGroups:
   type: RunAsAny
 users:
-- system:serviceaccount:nvidia:"{{ application_name }}"
+- system:serviceaccount:nvidia:{{ application_name }}
 volumes:
 - '*'
