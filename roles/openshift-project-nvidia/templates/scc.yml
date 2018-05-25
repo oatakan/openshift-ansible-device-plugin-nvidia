@@ -1,3 +1,5 @@
+apiVersion: security.openshift.io/v1
+kind: SecurityContextConstraints
 allowHostDirVolumePlugin: true
 allowHostIPC: true
 allowHostNetwork: true
@@ -7,31 +9,33 @@ allowPrivilegedContainer: true
 allowedCapabilities:
 - '*'
 allowedFlexVolumes: null
-apiVersion: v1
+defaultAddCapabilities: null
 fsGroup:
- type: RunAsAny
+  type: RunAsAny
 groups:
 - system:cluster-admins
 - system:nodes
 - system:masters
-kind: SecurityContextConstraints
 metadata:
- annotations:
-   kubernetes.io/description: anyuid provides all features of the restricted SCC
-     but allows users to run with any UID and any GID.
- creationTimestamp: null
- name: "{{ application_name }}"
+  annotations:
+    kubernetes.io/description: anyuid provides all features of the restricted SCC
+      but allows users to run with any UID and any GID.
+  creationTimestamp: 2018-05-24T23:49:47Z
+  name: nvidia-deviceplugin
+  resourceVersion: "13687"
+  selfLink: /apis/security.openshift.io/v1/securitycontextconstraints/nvidia-deviceplugin
+  uid: 24009e86-5fad-11e8-b678-54ee75936648
 priority: 10
 readOnlyRootFilesystem: false
-requiredDropCapabilities:
+requiredDropCapabilities: null
 runAsUser:
- type: RunAsAny
+  type: RunAsAny
 seLinuxContext:
- type: RunAsAny
+  type: RunAsAny
 seccompProfiles:
 - '*'
 supplementalGroups:
- type: RunAsAny
+  type: RunAsAny
 users:
 - system:serviceaccount:nvidia:nvidia-deviceplugin
 volumes:
