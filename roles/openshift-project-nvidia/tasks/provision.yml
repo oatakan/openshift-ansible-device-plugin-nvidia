@@ -63,7 +63,6 @@
 - name: deploy scc
   openshift_raw:
     name: "{{ application_name }}"
-    namespace: "{{ namespace }}"
     state: present
     definition: "{{ lookup('template', item) | from_yaml }}"
   with_items:
