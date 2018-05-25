@@ -17,7 +17,18 @@
     dest: /etc/origin/node/node-config.yaml
     backup: yes
 
+- name: test if origin node
+  command: systemctl status origin-node
+  register: origin_node
+
 - name: restart openshift node
   service:
     name: atomic-openshift-node
     state: restarted
+  when: orgin_node is not success
+
+- name: restart openshift node
+  service:
+    name: origin-node
+    state: restarted
+  when: orgin_node is success
