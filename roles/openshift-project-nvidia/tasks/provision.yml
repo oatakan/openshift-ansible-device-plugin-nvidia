@@ -115,7 +115,7 @@
                     - key: openshift.com/gpu-accelerator
                       operator: Exists
             serviceAccount: "{{ application_name }}"
-            serivceAccountName: "{{ application_name }}"
+            serviceAccountName: "{{ application_name }}"
             hostNetwork: true
             hostPID: true
             containers:
