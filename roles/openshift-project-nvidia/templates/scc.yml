@@ -6,8 +6,7 @@ allowHostNetwork: true
 allowHostPID: true
 allowHostPorts: true
 allowPrivilegedContainer: true
-allowedCapabilities:
-  - abc
+allowedCapabilities: abc
 allowedFlexVolumes: true
 defaultAddCapabilities: null
 fsGroup:
