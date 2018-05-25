@@ -28,10 +28,10 @@
   service:
     name: atomic-openshift-node
     state: restarted
-  when: orgin_node is not success
+  when: orgin_node.rc != 0
 
 - name: restart openshift node
   service:
     name: origin-node
     state: restarted
-  when: orgin_node is success
+  when: orgin_node.rc == 0
