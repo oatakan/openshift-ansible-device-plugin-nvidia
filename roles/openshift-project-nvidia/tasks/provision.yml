@@ -46,18 +46,18 @@
 #  environment:
 #    K8S_AUTH_KUBECONFIG: 'config'
 
-- name: process scc object template
-  template:
-    src: scc.yml
-    dest: "/tmp/scc.yml"
-  register: scc_object
+#- name: process scc object template
+#  template:
+#    src: scc.yml
+#    dest: "/tmp/scc.yml"
+#  register: scc_object
 
-- set_fact:
-    scc_object_path: "{{ scc_object.dest | default(scc_object.path) }}"
+#- set_fact:
+#    scc_object_path: "{{ scc_object.dest | default(scc_object.path) }}"
 
-- name: create scc
-  command: "oc create --config='{{ oc_config_file_location }}' -f {{ scc_object_path }} -n {{ namespace }}"
-  ignore_errors: yes
+#- name: create scc
+#  command: "oc create --config='{{ oc_config_file_location }}' -f {{ scc_object_path }} -n {{ namespace }}"
+#  ignore_errors: yes
 
 
 - name: deploy scc
