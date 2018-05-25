@@ -105,6 +105,8 @@
           metadata:
             labels:
               name: "{{ application_name }}"
+            selector:
+              name: '{{ application_name }}'
           spec:
             priorityClassName: system-node-critical
             affinity:
