@@ -61,7 +61,7 @@
 
 
 - name: deploy scc
-  k8s_raw:
+  openshift_raw:
     name: "{{ application_name }}"
     namespace: "{{ namespace }}"
     state: present
