@@ -20,6 +20,7 @@
 - name: test if origin node
   command: systemctl status origin-node
   register: origin_node
+  ignore_errors: yes
 
 - name: restart openshift node
   service:
