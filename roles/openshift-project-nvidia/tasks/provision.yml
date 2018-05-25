@@ -90,39 +90,45 @@
 #    K8S_AUTH_KUBECONFIG: 'config'
 
 - name: deploy daemonset
-  openshift_v1_daemon_set:
+  openshift_raw:
     name: "{{ application_name }}"
     namespace: "{{ namespace }}"
     state: present
     resource_definition:
-      template:
-        metadata:
-          labels:
-            name: "{{ application_name }}"
-        spec:
-          priorityClassName: system-node-critical
-          affinity:
-            nodeAffinity:
-              requiredDuringSchedulingIgnoredDuringExecution:
-                nodeSelectorTerms:
-                - matchExpressions:
-                  - key: openshift.com/gpu-accelerator
-                    operator: Exists
-          serviceAccount: "{{ application_name }}"
-          serivceAccountName: "{{ application_name }}"
-          hostNetwork: true
-          hostPID: true
-          containers:
-          - image: "{{ container_image_name }}"
-            name: "{{ application_name }}"
-            securityContext:
-              privileged: true
-            volumeMounts:
+      apiVersion: extensions/v1beta1
+      kind: DaemonSet
+      metadata:
+        name: nvidia-device-plugin-daemonset
+        namespace: nvidia
+      spec:
+        template:
+          metadata:
+            labels:
+              name: "{{ application_name }}"
+          spec:
+            priorityClassName: system-node-critical
+            affinity:
+              nodeAffinity:
+                requiredDuringSchedulingIgnoredDuringExecution:
+                  nodeSelectorTerms:
+                  - matchExpressions:
+                    - key: openshift.com/gpu-accelerator
+                      operator: Exists
+            serviceAccount: "{{ application_name }}"
+            serivceAccountName: "{{ application_name }}"
+            hostNetwork: true
+            hostPID: true
+            containers:
+            - image: "{{ container_image_name }}"
+              name: "{{ application_name }}"
+              securityContext:
+                privileged: true
+              volumeMounts:
+                - name: device-plugin
+                  mountPath: /var/lib/kubelet/device-plugins
+            volumes:
               - name: device-plugin
-                mountPath: /var/lib/kubelet/device-plugins
-          volumes:
-            - name: device-plugin
-              hostPath:
-                path: /var/lib/kubelet/device-plugins
+                hostPath:
+                  path: /var/lib/kubelet/device-plugins
   environment:
     K8S_AUTH_KUBECONFIG: 'config'
