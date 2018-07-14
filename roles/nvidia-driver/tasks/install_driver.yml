@@ -1,0 +1,63 @@
+- name: install kernel-devel
+  yum:
+    name: kernel-devel-{{ ansible_kernel }}
+    state: present
+
+- name: install epel
+  yum:
+    name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-{{ ansible_distribution_major_version }}.noarch.rpm
+    state: present
+  ignore_errors: true
+
+- name: install nvidia drivers
+  yum:
+    name: "{{ nvidia_driver_rpm_url }}"
+    state: present
+  when: ansible_distribution_major_version|int == 7
+
+- name: install xorg nvidia packages
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - xorg-x11-drv-nvidia
+    - xorg-x11-drv-nvidia-devel
+  register: xorg_nvidia_packages
+
+- name: reboot the system
+  become: yes
+  shell: "sleep 2 && shutdown -r now 'Rebooting (Ansible Nvidia driver installation)'"
+  async: 1
+  poll: 0
+  ignore_errors: True
+  when: xorg_nvidia_packages is changed
+
+- name: wait for server to reboot
+  wait_for_connection:
+    delay: 60
+    timeout: 300
+  when: xorg_nvidia_packages is changed
+
+#- name: remove nouveau kernel module
+#  modprobe:
+#    name: nouveau
+#    state: absent
+
+#- name: remove nouveau kernel module
+#  shell: modprobe -r nouveau
+
+#- name: load NVIDIA and unified memory kernel modules
+#  shell: nvidia-modprobe && nvidia-modprobe -u
+
+- name: check if the installation and drivers are working
+  shell: nvidia-smi --query-gpu=gpu_name --format=csv,noheader --id=0 | sed -e 's/ /-/g'
+  register: nvidia_smi_command
+
+- name: debug nvidia_smi command output
+  debug:
+    var: nvidia_smi_command.stdout
+
+- name: fail if no output
+  fail:
+    msg: "nvidia_smi is not installed successfully."
+  when: nvidia_smi_command.stdout == ""

@@ -2,8 +2,8 @@
   become: yes
   roles:
     - nvidia-driver
-    - nvidia-container-runtime-hook
-    - openshift-gpu-device-plugin
+    - { role: nvidia-container-runtime-hook, when: gpu_present }
+    - { role: openshift-gpu-device-plugin, when: gpu_present }
 
 - name: add cluster admin user
   hosts: masters
@@ -39,4 +39,7 @@
     - name: label nodes
       command: oc label node --config='{{ oc_config_file_location }}' --overwrite=true {{ item }} openshift.com/gpu-accelerator=true
       with_items: "{{ groups.nodes }}"
-      when: (hostvars[item].cuda_vector_add_container is defined) and ("Test PASSED" in hostvars[item].cuda_vector_add_container.ansible_facts.docker_container.Output)
+      when:
+        - hostvars[item].gpu_present
+        - hostvars[item].cuda_vector_add_container is defined
+        - "Test PASSED" in hostvars[item].cuda_vector_add_container.ansible_facts.docker_container.Output
