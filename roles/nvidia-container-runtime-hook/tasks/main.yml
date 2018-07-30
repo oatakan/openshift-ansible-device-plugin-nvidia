@@ -66,6 +66,11 @@
     path: /etc/rc.d/rc.local
     line: 'nvidia-container-cli -k list | restorecon -v -f -'
 
+- name: set executable bit on the rc.local file
+  file:
+    path: /etc/rc.d/rc.local
+    mode: 0755
+
 - name: test cuda-vector-add container
   docker_container:
     name: test-cuda-vector-add
