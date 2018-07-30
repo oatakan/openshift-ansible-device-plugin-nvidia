@@ -38,7 +38,7 @@
 
 - name: selinux set context for nvidia files
   sefcontext:
-    target: /dev/nvidia*
+    target: '/dev/nvidia(/.*)?'
     setype: svirt_sandbox_file_t
     state: present
     reload: yes
@@ -46,7 +46,7 @@
 
 - name: selinux set context for nvidia files
   sefcontext:
-    target: /dev/nvidia*
+    target: '/dev/nvidia(/.*)?'
     setype: container_file_t
     state: present
     reload: yes
@@ -59,6 +59,12 @@
 - name: selinux set context for nvidia files
   shell: chcon -t container_file_t /dev/nvidia*
   when: ansible_distribution_version is version('7.5', '>=')
+
+# see: https://github.com/NVIDIA/nvidia-container-runtime/issues/28
+- name: run restorecon to make changes peristent
+  lineinfile:
+    path: /etc/rc.d/rc.local
+    line: 'nvidia-container-cli -k list | restorecon -v -f -'
 
 - name: test cuda-vector-add container
   docker_container:
