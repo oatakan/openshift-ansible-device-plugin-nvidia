@@ -38,7 +38,7 @@
 
 - name: selinux set context for nvidia files
   sefcontext:
-    target: '/dev/nvidia(.*)?'
+    target: /dev/nvidia*
     setype: svirt_sandbox_file_t
     state: present
     reload: yes
@@ -46,7 +46,7 @@
 
 - name: selinux set context for nvidia files
   sefcontext:
-    target: '/dev/nvidia(.*)?'
+    target: /dev/nvidia*
     setype: container_file_t
     state: present
     reload: yes
