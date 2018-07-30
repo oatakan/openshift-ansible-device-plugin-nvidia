@@ -10,8 +10,9 @@
   become: yes
   tasks:
     - name: assign cluster admin role to admin user
-      command: oc login https://localhost:8443; oc adm policy add-cluster-role-to-user cluster-admin admin
+      command: oc login -u system:admin; oc adm policy add-cluster-role-to-user cluster-admin admin
       run_once: yes
+      ignore_errors: yes
 
 - name: label nodes
   hosts: localhost
