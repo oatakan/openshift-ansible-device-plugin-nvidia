@@ -43,4 +43,4 @@
       when:
         - hostvars[item].gpu_present
         - hostvars[item].cuda_vector_add_container is defined
-        - "Test PASSED" in hostvars[item].cuda_vector_add_container.ansible_facts.docker_container.Output
+        - ("Test PASSED" in hostvars[item].cuda_vector_add_container.ansible_facts.docker_container.Output)
