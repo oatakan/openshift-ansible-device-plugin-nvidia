@@ -28,7 +28,7 @@
     state: restarted
   when: origin_node is not success
 
-- name: restart openshift node
+- name: restart origin node
   service:
     name: origin-node
     state: restarted

@@ -1,5 +1,5 @@
 namespace: nvidia
 application_name: nvidia-deviceplugin
-container_image_name: nvidia/k8s-device-plugin:1.9
+container_image_name: nvidia/k8s-device-plugin:1.10
 
 oc_config_file_location: ~/.kube/config

@@ -3,7 +3,7 @@
   roles:
     - nvidia-driver
     - { role: nvidia-container-runtime-hook, when: gpu_present }
-    - { role: openshift-gpu-device-plugin, when: gpu_present }
+    #- { role: openshift-gpu-device-plugin, when: gpu_present }
 
 - name: add cluster admin user
   hosts: masters
