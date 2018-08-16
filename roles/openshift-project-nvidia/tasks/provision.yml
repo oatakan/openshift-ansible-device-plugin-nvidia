@@ -39,11 +39,13 @@
 #    K8S_AUTH_KUBECONFIG: 'config'
 
 - name: deploy daemonset
-  openshift_raw:
+  k8s:
     name: "{{ application_name }}"
     namespace: "{{ namespace }}"
     state: present
     definition: "{{ lookup('template', item) | from_yaml }}"
+    verify_ssl: no
+    api_key: "{{ api_key }}"
   with_items:
     - daemon_set.yml
   environment:
