@@ -1,4 +1,6 @@
 {
-   "hook": "/usr/bin/nvidia-container-runtime-hook",
-   "stage": [ "prestart" ]
+  "hook": "/usr/bin/nvidia-container-runtime-hook",
+  "arguments": ["prestart"],
+  "annotations": ["sandbox"],
+  "stage": [ "prestart" ]
 }

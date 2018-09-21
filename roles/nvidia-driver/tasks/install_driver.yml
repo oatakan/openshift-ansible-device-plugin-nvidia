@@ -22,6 +22,7 @@
   with_items:
     - xorg-x11-drv-nvidia
     - xorg-x11-drv-nvidia-devel
+    - nvidia-driver-cuda
   register: xorg_nvidia_packages
 
 - name: reboot the system
