@@ -1,16 +1,16 @@
 apiVersion: v1
 kind: DaemonSet
 metadata:
-  name: "{{ application_name }}"
+  name: "{{ app_name }}"
   namespace: "{{ namespace }}"
 spec:
   selector:
     matchLabels:
-      name: '{{ application_name }}'
+      name: '{{ app_name }}'
   template:
     metadata:
       labels:
-        name: "{{ application_name }}"
+        name: "{{ app_name }}"
     spec:
       priorityClassName: system-node-critical
       affinity:
@@ -20,13 +20,13 @@ spec:
             - matchExpressions:
               - key: openshift.com/gpu-accelerator
                 operator: Exists
-      serviceAccount: "{{ application_name }}"
-      serviceAccountName: "{{ application_name }}"
+      serviceAccount: "{{ app_name }}"
+      serviceAccountName: "{{ app_name }}"
       hostNetwork: true
       hostPID: true
       containers:
-      - image: "{{ container_image_name }}"
-        name: "{{ application_name }}"
+      - image: "{{ nvidia_image_name }}:{{ nvidia_image_tag }}"
+        name: "{{ app_name }}"
         securityContext:
           privileged: true
         volumeMounts:

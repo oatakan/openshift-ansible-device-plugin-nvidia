@@ -1,0 +1,9 @@
+- name: provision
+  hosts: localhost
+  gather_facts: false
+  connection: local
+  roles:
+  - role: oatakan.openshift-add-auth-config
+  - role: ../../.
+  vars:
+    apb_action: provision

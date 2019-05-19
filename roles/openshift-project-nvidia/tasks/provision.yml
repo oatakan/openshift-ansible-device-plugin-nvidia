@@ -1,42 +1,53 @@
 ---
+
 - name: create project from namespace
-  openshift_v1_project:
+  k8s:
     name: '{{ namespace }}'
+    api_version: v1
+    kind: Project
+    api_key: "{{ api_key }}"
+    validate_certs: no
     state: present
-  environment:
-    K8S_AUTH_KUBECONFIG: 'config'
+
+#- name: create ServiceAccount
+#  k8s_v1_service_account:
+#    name: "{{ application_name }}"
+#    namespace: "{{ namespace }}"
+#    state: present
+#  environment:
+#    K8S_AUTH_KUBECONFIG: 'config'
 
 - name: create ServiceAccount
-  k8s_v1_service_account:
+  k8s:
+    state: present
+    definition: "{{ lookup('template', 'service_account.yml') | from_yaml }}"
+    validate_certs: no
+    api_key: "{{ api_key }}"
+
+#- name: process scc object template
+#  template:
+#    src: scc.yml.j2
+#    dest: "/tmp/scc.yml"
+#  register: scc_object
+#
+#- set_fact:
+#    scc_object_path: "{{ scc_object.dest | default(scc_object.path) }}"
+#
+#- name: create scc
+#  command: "oc create --config='{{ oc_config_file_location }}' -f {{ scc_object_path }} -n {{ namespace }}"
+#  ignore_errors: yes
+
+
+- name: deploy scc
+  k8s:
     name: "{{ application_name }}"
     namespace: "{{ namespace }}"
     state: present
-  environment:
-    K8S_AUTH_KUBECONFIG: 'config'
-
-- name: process scc object template
-  template:
-    src: scc.yml.j2
-    dest: "/tmp/scc.yml"
-  register: scc_object
-
-- set_fact:
-    scc_object_path: "{{ scc_object.dest | default(scc_object.path) }}"
-
-- name: create scc
-  command: "oc create --config='{{ oc_config_file_location }}' -f {{ scc_object_path }} -n {{ namespace }}"
-  ignore_errors: yes
-
-
-#- name: deploy scc
-#  openshift_raw:
-#    name: "{{ application_name }}"
-#    state: present
-#    definition: "{{ lookup('template', item) | from_yaml }}"
-#  with_items:
-#    - scc.yml
-#  environment:
-#    K8S_AUTH_KUBECONFIG: 'config'
+    definition: "{{ lookup('template', item) | from_yaml }}"
+    validate_certs: no
+    api_key: "{{ api_key }}"
+  loop:
+    - scc.yml
 
 - name: deploy daemonset
   k8s:
@@ -44,10 +55,7 @@
     namespace: "{{ namespace }}"
     state: present
     definition: "{{ lookup('template', item) | from_yaml }}"
-    validate_certs: False
+    validate_certs: no
     api_key: "{{ api_key }}"
   loop:
     - daemon_set.yml
-  environment:
-    K8S_AUTH_KUBECONFIG: 'config'
-    #K8S_AUTH_VERIFY_SSL: 'False'

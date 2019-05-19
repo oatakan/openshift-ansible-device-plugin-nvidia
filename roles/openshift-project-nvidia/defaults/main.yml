@@ -1,5 +1,11 @@
-namespace: nvidia
-application_name: nvidia-deviceplugin
-container_image_name: nvidia/k8s-device-plugin:1.10
+---
 
-oc_config_file_location: ~/.kube/config
+_apb_plan_id: default
+_apb_service_class_id: 0
+_apb_service_instance_id: 0
+
+app_name: "nvidia-deviceplugin-{{ _apb_service_instance_id }}"
+namespace: "{{ lookup('env','NAMESPACE') | default('nvidia', true) }}"
+
+nvidia_image_name: nvidia/k8s-device-plugin
+nvidia_image_tag: 1.10
