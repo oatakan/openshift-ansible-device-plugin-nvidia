@@ -44,7 +44,7 @@
     namespace: "{{ namespace }}"
     state: present
     definition: "{{ lookup('template', item) | from_yaml }}"
-    verify_ssl: no
+    validate_certs: no
     api_key: "{{ api_key }}"
   with_items:
     - daemon_set.yml
