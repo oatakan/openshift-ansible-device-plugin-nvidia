@@ -44,10 +44,10 @@
     namespace: "{{ namespace }}"
     state: present
     definition: "{{ lookup('template', item) | from_yaml }}"
-    #validate_certs: no
+    validate_certs: no
     #api_key: "{{ api_key }}"
   loop:
     - daemon_set.yml
   environment:
     K8S_AUTH_KUBECONFIG: 'config'
-    K8S_AUTH_VERIFY_SSL: False
+    #K8S_AUTH_VERIFY_SSL: False
