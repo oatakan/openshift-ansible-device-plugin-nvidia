@@ -50,4 +50,4 @@
     - daemon_set.yml
   environment:
     K8S_AUTH_KUBECONFIG: 'config'
-    K8S_AUTH_VERIFY_SSL: False
+    K8S_AUTH_VERIFY_SSL: 'False'
