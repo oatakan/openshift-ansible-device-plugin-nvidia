@@ -8,4 +8,4 @@ app_name: "nvidia-deviceplugin-{{ _apb_service_instance_id }}"
 namespace: "{{ lookup('env','NAMESPACE') | default('nvidia', true) }}"
 
 nvidia_image_name: nvidia/k8s-device-plugin
-nvidia_image_tag: 1.10
+nvidia_image_tag: '1.11'
