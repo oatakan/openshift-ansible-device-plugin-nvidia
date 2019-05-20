@@ -27,3 +27,4 @@
         validate_certs: no
         api_key: "{{ api_key }}"
         state: absent
+      when: "'kube-system' not in namespace"
