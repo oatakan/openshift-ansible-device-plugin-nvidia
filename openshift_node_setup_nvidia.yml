@@ -23,9 +23,8 @@
     namespace: default
 
   roles:
-    - oatakan.openshift-add-auth-config
-    - role: ansible.kubernetes-modules
-      install_python_requirements: no
+    - role: oatakan.openshift-add-auth-config
+      oc_auth_type: api
 
   post_tasks:
     #- name: label nodes
@@ -39,8 +38,8 @@
 
     - name: label nodes
       command: oc label node --config='{{ oc_config_file_location }}' --overwrite=true {{ item }} openshift.com/gpu-accelerator=true
-      with_items: "{{ groups.nodes }}"
+      loop: "{{ groups.nodes }}"
       when:
-        - hostvars[item].gpu_present
+        - hostvars[item].gpu_present|bool
         - hostvars[item].cuda_vector_add_container is defined
         - ("Test PASSED" in hostvars[item].cuda_vector_add_container.ansible_facts.docker_container.Output)

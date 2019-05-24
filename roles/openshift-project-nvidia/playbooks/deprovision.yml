@@ -4,6 +4,7 @@
   connection: local
   roles:
   - role: oatakan.openshift-add-auth-config
+    oc_auth_type: api
   - role: ../../.
   vars:
     apb_action: deprovision

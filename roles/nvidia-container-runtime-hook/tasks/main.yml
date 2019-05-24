@@ -9,7 +9,7 @@
   rpm_key:
     state: present
     key: "{{ item }}"
-  with_items: "{{ nvidia_container_runtime_repo_keys }}"
+  loop: "{{ nvidia_container_runtime_repo_keys }}"
 
 - name: disable gpg key check on the nvidia repo
   replace:
