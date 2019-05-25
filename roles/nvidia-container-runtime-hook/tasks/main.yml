@@ -81,15 +81,6 @@
     path: /etc/rc.d/rc.local
     mode: 0755
 
-- name: grab docker version
-  command: python -c 'import docker; print(docker.__version__)'
-  register: py_docker_version
-  ignore_errors: yes
-
-- debug:
-    var: py_docker_version
-  when: py_docker_version is defined
-
 - name: test cuda-vector-add container
   docker_container:
     name: test-cuda-vector-add
