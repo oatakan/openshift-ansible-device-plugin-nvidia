@@ -1,5 +1,0 @@
----
-
-nvidia_docker_repo_url: https://nvidia.github.io/nvidia-docker/centos7/nvidia-docker.repo
-nvidia_docker_repo_keys:
-  - https://nvidia.github.io/nvidia-docker/gpgkey

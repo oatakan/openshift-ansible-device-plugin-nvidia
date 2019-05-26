@@ -1,4 +1,4 @@
-- hosts: nodes,tag_app_name_ai_deoldify
+- hosts: nodes
   become: yes
   tasks:
     - name: check to see if NVIDIA GPU is present

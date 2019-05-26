@@ -3,3 +3,5 @@ nvidia_container_runtime_repo_url: https://nvidia.github.io/nvidia-container-run
 nvidia_container_runtime_repo_keys:
   - https://nvidia.github.io/libnvidia-container/gpgkey
   - https://nvidia.github.io/nvidia-container-runtime/gpgkey
+
+openshift_oci_hook_install: yes

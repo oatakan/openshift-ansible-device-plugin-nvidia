@@ -1,0 +1,60 @@
+---
+
+- name: copy oci-nvidia-hook
+  copy:
+    src: oci-nvidia-hook
+    dest: /usr/libexec/oci/hooks.d/oci-nvidia-hook
+    mode: u+rwx
+
+- name: copy oci-nvidia-hook.json
+  copy:
+    src: oci-nvidia-hook.json
+    dest: /usr/share/containers/oci/hooks.d/oci-nvidia-hook.json
+
+- name: obtain selinux status
+  command: getenforce
+  register: selinux_status
+  ignore_errors: yes
+
+- block:
+
+    - name: restore selinux
+      shell: nvidia-container-cli -k list | restorecon -v -f -
+
+    - name: selinux set context for nvidia files
+      sefcontext:
+        target: '/dev/nvidia(/.*)?'
+        setype: svirt_sandbox_file_t
+        state: present
+        reload: yes
+      when: ansible_distribution_version is version('7.5', '<')
+
+    - name: selinux set context for nvidia files
+      sefcontext:
+        target: '/dev/nvidia(/.*)?'
+        setype: container_file_t
+        state: present
+        reload: yes
+      when: ansible_distribution_version is version('7.5', '>=')
+
+    - name: selinux set context for nvidia files
+      shell: chcon -t svirt_sandbox_file_t /dev/nvidia*
+      when: ansible_distribution_version is version('7.5', '<')
+
+    - name: selinux set context for nvidia files
+      shell: chcon -t container_file_t /dev/nvidia*
+      when: ansible_distribution_version is version('7.5', '>=')
+
+    # see: https://github.com/NVIDIA/nvidia-container-runtime/issues/28
+    - name: run restorecon to make changes peristent
+      lineinfile:
+        path: /etc/rc.d/rc.local
+        line: 'nvidia-container-cli -k list | restorecon -v -f -'
+  when:
+    - selinux_status is defined
+    - "'Enforcing' in selinux_status.stdout"
+
+- name: set executable bit on the rc.local file
+  file:
+    path: /etc/rc.d/rc.local
+    mode: 0755

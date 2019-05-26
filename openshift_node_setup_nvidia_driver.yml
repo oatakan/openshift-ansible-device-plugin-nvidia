@@ -3,6 +3,6 @@
   roles:
     - docker-setup
     - nvidia-driver
-
-- name: include docker cuda test playbook
-  import_playbook: docker_cuda_test.yml
+    - role: nvidia-container-runtime-hook
+      openshift_oci_hook_install: no
+      when: gpu_present|bool
