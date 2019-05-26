@@ -51,6 +51,7 @@
         definition:
           apiVersion: v1
           kind: Node
+          name: "{{ item }}"
           metadata:
             labels:
               openshift.com/gpu-accelerator=true
