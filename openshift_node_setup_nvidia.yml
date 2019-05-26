@@ -52,9 +52,8 @@
           apiVersion: v1
           kind: Node
           metadata:
-            name: "{{ item }}"
             labels:
-              openshift.com/gpu-accelerator=true
+              openshift.com/gpu-accelerator: true
         validate_certs: no
         api_key: "{{ api_key }}"
       loop: "{{ groups.nodes }}"
