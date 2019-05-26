@@ -47,6 +47,7 @@
     - name: label nodes
       k8s:
         state: present
+        name: "{{ item }}"
         definition:
           apiVersion: v1
           kind: Node
