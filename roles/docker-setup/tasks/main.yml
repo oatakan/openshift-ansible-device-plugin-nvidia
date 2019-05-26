@@ -13,3 +13,26 @@
     state: latest
   notify:
     - start Docker
+
+- name: install nvidia-container-runtime repo
+  get_url:
+    url: "{{ nvidia_docker_repo_url }}"
+    dest: /etc/yum.repos.d/nvidia-docker.repo
+
+# this doesn't seem to work
+- name: import nvidia repo key
+  rpm_key:
+    state: present
+    key: "{{ item }}"
+  loop: "{{ nvidia_docker_repo_keys }}"
+
+- name: disable gpg key check on the nvidia repo
+  replace:
+    path: /etc/yum.repos.d/nvidia-docker.repo
+    regexp: repo_gpgcheck=1
+    replace: repo_gpgcheck=0
+
+- name: install nvidia-docker
+  yum:
+    name: nvidia-docker
+    state: present
