@@ -1,0 +1,8 @@
+- hosts: nodes
+  become: yes
+  roles:
+    - docker-setup
+    - nvidia-driver
+
+- name: include docker cuda test playbook
+  include_playbook: docker_cuda_test.yml

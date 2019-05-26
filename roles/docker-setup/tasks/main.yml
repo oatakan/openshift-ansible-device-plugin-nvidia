@@ -1,0 +1,15 @@
+---
+
+- name: ensure cloud-init is disabled
+  file:
+    path: /etc/cloud/cloud-init.disabled
+    state: touch
+  ignore_errors: yes
+
+- name: ensure docker is installed
+  yum:
+    name:
+      - docker
+    state: latest
+  notify:
+    - start Docker
