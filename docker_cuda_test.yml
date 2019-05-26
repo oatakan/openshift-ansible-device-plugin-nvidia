@@ -8,6 +8,22 @@
       ignore_errors: yes
 
     - block:
+        - name: check if the installation and drivers are working
+          shell: nvidia-smi --query-gpu=gpu_name --format=csv,noheader --id=0 | sed -e 's/ /-/g'
+          register: nvidia_smi_command
+
+        - name: debug nvidia_smi command output
+          debug:
+            var: nvidia_smi_command.stdout
+
+        - name: fail if no output
+          fail:
+            msg: "nvidia_smi is not installed successfully."
+          when: nvidia_smi_command.stdout == ""
+
+      when: check_gpu_present is success
+
+    - block:
         - name: test cuda-vector-add container
           docker_container:
             name: test-cuda-vector-add

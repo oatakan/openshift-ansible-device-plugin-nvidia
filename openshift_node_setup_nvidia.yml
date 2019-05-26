@@ -36,8 +36,25 @@
     #    K8S_AUTH_KUBECONFIG: 'config'
     #  with_items: "{{ groups.nodes }}"
 
+#    - name: label nodes
+#      command: oc label node --config='{{ oc_config_file_location }}' --overwrite=true {{ item }} openshift.com/gpu-accelerator=true
+#      loop: "{{ groups.nodes }}"
+#      when:
+#        - hostvars[item].gpu_present|bool
+#        - hostvars[item].cuda_vector_add_container is defined
+#        - ("Test PASSED" in hostvars[item].cuda_vector_add_container.ansible_facts.docker_container.Output)
+
     - name: label nodes
-      command: oc label node --config='{{ oc_config_file_location }}' --overwrite=true {{ item }} openshift.com/gpu-accelerator=true
+      k8s:
+        state: present
+        definition:
+          apiVersion: v1
+          kind: Node
+          name: "{{ item }}"
+          labels:
+            openshift.com/gpu-accelerator=true
+        validate_certs: no
+        api_key: "{{ api_key }}"
       loop: "{{ groups.nodes }}"
       when:
         - hostvars[item].gpu_present|bool
