@@ -51,8 +51,8 @@
         definition:
           apiVersion: v1
           kind: Node
-          name: "{{ item }}"
           metadata:
+            name: "{{ item }}"
             labels:
               openshift.com/gpu-accelerator=true
         validate_certs: no
