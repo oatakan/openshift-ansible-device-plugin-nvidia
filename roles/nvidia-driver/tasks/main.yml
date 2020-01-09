@@ -4,7 +4,7 @@
     state: present
 
 - name: check to see if NVIDIA GPU is present
-  shell: lspci -v -s $(lspci | grep ' VGA ' | grep NVIDIA | cut -d" " -f 1 | head -1) | grep NVIDIA
+  shell: lspci -v -s $(lspci | grep ' VGA \|3D' | grep NVIDIA | cut -d" " -f 1 | head -1) | grep NVIDIA
   register: check_gpu_present
   ignore_errors: yes
 
