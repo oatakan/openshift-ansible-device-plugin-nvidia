@@ -28,7 +28,7 @@
 
   post_tasks:
 #    - name: label nodes
-#      command: oc label node --config='{{ oc_config_file_location }}' --overwrite=true {{ hostvars[item].ansible_hostname }} openshift.com/gpu-accelerator=true
+#      command: oc label node --config='{{ oc_config_file_location }}' --overwrite=true {{ hostvars[item].ansible_nodename }} openshift.com/gpu-accelerator=true
 #      loop: "{{ groups.nodes }}"
 #      when:
 #        - hostvars[item].gpu_present|bool
