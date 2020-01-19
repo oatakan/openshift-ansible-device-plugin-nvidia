@@ -38,7 +38,7 @@
     - name: label nodes
       k8s:
         state: present
-        name: "{{ hostvars[item].ansible_hostname }}"
+        name: "{{ hostvars[item].ansible_nodename }}"
         definition:
           apiVersion: v1
           kind: Node
