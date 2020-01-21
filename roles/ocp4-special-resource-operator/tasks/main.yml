@@ -7,6 +7,8 @@
 
 - name: deploy sro
   shell: make -C special-resource-operator deploy
+  args:
+    chdir: /tmp
   environment:
     KUBECONFIG: /root/{{ cluster_id }}/auth/kubeconfig
   register: deploy_sro
