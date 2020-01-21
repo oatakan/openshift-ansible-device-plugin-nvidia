@@ -1,0 +1,9 @@
+- name: openshift install special resource operator
+  hosts: '*openshift_helper'
+  become: yes
+  vars:
+    domain_suffix: nip.io
+    cluster_id: ocp4dev
+    provider: vmware
+  roles:
+    - ocp4-special-resource-operator

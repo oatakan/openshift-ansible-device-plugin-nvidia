@@ -1,0 +1,15 @@
+---
+
+- name: check out from git
+  git:
+    repo: '{{ sro_git_url }}'
+    dest: /tmp/special-resource-operator
+
+- name: deploy sro
+  shell: make -C special-resource-operator deploy
+  environment:
+    KUBECONFIG: /root/{{ cluster_id }}/auth/kubeconfig
+  register: deploy_sro
+
+- debug:
+    msg: "{{ deploy_sro.stdout }}"
