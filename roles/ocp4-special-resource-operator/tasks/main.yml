@@ -8,7 +8,7 @@
   git:
     repo: '{{ sro_git_url }}'
     dest: /tmp/special-resource-operator
-    version: "{{ sro_tag }}"
+    version: "{{ sro_image_tag }}"
 
 #- name: expose registry to outside
 #  shell: oc patch configs.imageregistry.operator.openshift.io/cluster --patch '{"spec":{"defaultRoute":true}}' --type=merge
