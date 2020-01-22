@@ -8,7 +8,33 @@
   git:
     repo: '{{ sro_git_url }}'
     dest: /tmp/special-resource-operator
-    version: release-4.2
+    version: "{{ sro_tag }}"
+
+#- name: expose registry to outside
+#  shell: oc patch configs.imageregistry.operator.openshift.io/cluster --patch '{"spec":{"defaultRoute":true}}' --type=merge
+#  environment:
+#    KUBECONFIG: /root/{{ cluster_id }}/auth/kubeconfig
+#
+#- name: get default route to registry
+#  shell: oc get route default-route -n openshift-image-registry --template='{{ .spec.host }}'
+#  environment:
+#    KUBECONFIG: /root/{{ cluster_id }}/auth/kubeconfig
+#  register: oc_registry_default_route
+#
+#- name: login with podman
+#  shell: podman login -u $(oc whoami) -p $(oc whoami -t) --tls-verify=false {{ oc_registry_default_route.stdout }}
+#  environment:
+#    KUBECONFIG: /root/{{ cluster_id }}/auth/kubeconfig
+
+- name: create sro buildconfig file
+  template:
+    src: sro-buildconfig.yml.j2
+    dest: /root/{{ cluster_id }}/sro-buildconfig.yml
+
+- name: apply sro buildconfig
+  shell: oc --config auth/kubeconfig apply -f sro-buildconfig.yml --wait
+  args:
+    chdir: /root/{{ cluster_id }}/
 
 - name: deploy sro
   shell: make deploy
@@ -17,6 +43,10 @@
   environment:
     KUBECONFIG: /root/{{ cluster_id }}/auth/kubeconfig
     PULLPOLICY: Always
+    REGISTRY: mage-registry.openshift-image-registry.svc:5000
+    ORG: "{{ namespace }}"
+    NAMESPACE: "{{ namespace }}"
+    TAG: "{{ sro_image_tag }}"
   register: deploy_sro
 
 - debug:
