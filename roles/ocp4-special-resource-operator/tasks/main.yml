@@ -1,16 +1,22 @@
 ---
 
+- name: ensure go-toolset is installed
+  package:
+    name: go-toolset
+
 - name: check out from git
   git:
     repo: '{{ sro_git_url }}'
     dest: /tmp/special-resource-operator
+    version: release-4.2
 
 - name: deploy sro
-  shell: make -C special-resource-operator deploy
+  shell: make deploy
   args:
-    chdir: /tmp
+    chdir: /tmp/special-resource-operator
   environment:
     KUBECONFIG: /root/{{ cluster_id }}/auth/kubeconfig
+    PULLPOLICY: Always
   register: deploy_sro
 
 - debug:
