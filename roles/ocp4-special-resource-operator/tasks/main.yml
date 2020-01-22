@@ -32,7 +32,7 @@
     dest: /root/{{ cluster_id }}/sro-buildconfig.yml
 
 - name: apply sro buildconfig
-  shell: oc --config auth/kubeconfig apply -f sro-buildconfig.yml --wait
+  shell: oc --config auth/kubeconfig apply -f sro-buildconfig.yml -n "{{ namespace }}" --wait
   args:
     chdir: /root/{{ cluster_id }}/
 
@@ -43,7 +43,7 @@
   environment:
     KUBECONFIG: /root/{{ cluster_id }}/auth/kubeconfig
     PULLPOLICY: Always
-    REGISTRY: mage-registry.openshift-image-registry.svc:5000
+    REGISTRY: image-registry.openshift-image-registry.svc:5000
     ORG: "{{ namespace }}"
     NAMESPACE: "{{ namespace }}"
     TAG: "{{ sro_image_tag }}"
