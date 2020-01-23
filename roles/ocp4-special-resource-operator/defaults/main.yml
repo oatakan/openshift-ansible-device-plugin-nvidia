@@ -1,5 +1,7 @@
 ---
 
+ocp_version: 4.3.0
+
 sro_git_url: https://github.com/openshift-psap/special-resource-operator.git
 sro_image_name: special-resource-operator
 sro_image_tag: release-4.2
