@@ -28,8 +28,17 @@
 
 - name: create sro buildconfig file
   template:
-    src: sro-buildconfig.yml.j2
-    dest: /root/{{ cluster_id }}/sro-buildconfig.yml
+    src: "{{ item }}"
+    dest: /root/{{ cluster_id }}/{{ item | replace('.j2','') }}
+  loop:
+    - namespace.yml.j2
+    - sro-buildconfig.yml.j2
+
+- name: ensure namespace exists
+  shell: oc --config auth/kubeconfig apply -f namespace.yml --wait
+  args:
+    chdir: /root/{{ cluster_id }}/
+  ignore_errors: yes
 
 - name: apply sro buildconfig
   shell: oc --config auth/kubeconfig apply -f sro-buildconfig.yml -n "{{ namespace }}" --wait
