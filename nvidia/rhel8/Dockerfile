@@ -1,4 +1,4 @@
-FROM registry.access.redhat.com/ubi8:8.1-406
+FROM registry.access.redhat.com/ubi8:8.0
 
 RUN yum install -y \
         ca-certificates \
