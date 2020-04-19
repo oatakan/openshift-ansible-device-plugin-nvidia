@@ -1,4 +1,4 @@
-FROM registry.access.redhat.com/ubi8:8.0
+FROM registry.access.redhat.com/ubi8:latest
 
 COPY CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo
 COPY RPM-GPG-KEY-centosofficial /etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial
@@ -50,6 +50,10 @@ RUN cd /tmp && \
     rm -rf /tmp/*
 
 COPY nvidia-driver /usr/local/bin
+COPY CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo
+COPY RPM-GPG-KEY-centosofficial /etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial
+
+RUN chmod +x /usr/local/bin/nvidia-driver
 
 WORKDIR /usr/src/nvidia-$DRIVER_VERSION
 
