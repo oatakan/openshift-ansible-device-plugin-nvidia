@@ -7,6 +7,8 @@ RUN yum install -y \
         glibc.i686 \
         make \
         cpio \
+        elfutils-libelf \
+        elfutils-libelf-devel \
         kmod && \
     rm -rf /var/cache/yum/*
 
