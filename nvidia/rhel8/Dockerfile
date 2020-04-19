@@ -1,5 +1,8 @@
 FROM registry.access.redhat.com/ubi8:8.0
 
+COPY CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo
+COPY RPM-GPG-KEY-centosofficial /etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial
+
 RUN yum install -y \
         ca-certificates \
         curl \
