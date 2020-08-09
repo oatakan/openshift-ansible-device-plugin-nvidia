@@ -16,7 +16,7 @@
 #    K8S_AUTH_KUBECONFIG: 'config'
 
 - name: remove scc
-  command: "oc delete scc --config='{{ oc_config_file_location }}' '{{ application_name }}' -n {{ namespace }}"
+  command: "oc delete scc --kubeconfig='{{ oc_config_file_location }}' '{{ application_name }}' -n {{ namespace }}"
   ignore_errors: yes
 
 - name: remove ServiceAccount
