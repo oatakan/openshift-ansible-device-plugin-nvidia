@@ -47,7 +47,6 @@
   shell: oc --kubeconfig auth/kubeconfig apply -f namespace.yml --wait
   args:
     chdir: /root/{{ cluster_id }}/
-  ignore_errors: yes
 
 - name: apply sro buildconfig
   shell: oc --kubeconfig auth/kubeconfig apply -f sro-buildconfig.yml -n "{{ namespace }}" --wait
@@ -60,7 +59,6 @@
     chdir: /tmp/special-resource-operator
   environment:
     KUBECONFIG: /root/{{ cluster_id }}/auth/kubeconfig
-    SPECIALRESOURCE: nvidia-gpu
     PULLPOLICY: Always
     REGISTRY: image-registry.openshift-image-registry.svc:5000
     ORG: "{{ namespace }}"
