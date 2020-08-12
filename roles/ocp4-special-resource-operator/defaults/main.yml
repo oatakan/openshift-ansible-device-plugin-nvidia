@@ -6,3 +6,5 @@ sro_git_url: https://github.com/openshift-psap/special-resource-operator.git
 sro_image_name: special-resource-operator
 sro_image_tag: release-4.2
 namespace: openshift-sro
+
+sro_nvidia_driver_build_config_repo: https://github.com/oatakan/openshift-nvidia-driver.git
