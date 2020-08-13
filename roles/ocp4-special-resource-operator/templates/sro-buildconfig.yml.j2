@@ -19,7 +19,11 @@ spec:
     - type: "ImageChange"
   source:
     git:
-      ref: {% if sro_image_tag == 'release-4.4' %}{{ sro_image_tag }}b6b69864d569bc1917ff500f14b91861a63e89a9{% else %}{{ sro_image_tag }}{% endif %}
+{% if sro_image_tag == 'release-4.4' %}
+      ref: b6b69864d569bc1917ff500f14b91861a63e89a9
+{% else %}
+      ref: {{ sro_image_tag }}
+{% endif %}
       uri: {{ sro_git_url }}
     type: Git
   strategy:
