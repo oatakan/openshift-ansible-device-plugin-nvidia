@@ -9,15 +9,6 @@
     repo: '{{ sro_git_url }}'
     dest: /tmp/special-resource-operator
     version: "{{ sro_image_tag }}"
-  when: sro_image_tag != 'release-4.4'
-
-# there seems to be a bug as of the last commit Jul 27, 2020, we use a specific commit that works
-- name: check out from git (temporary fix)
-  git:
-    repo: '{{ sro_git_url }}'
-    dest: /tmp/special-resource-operator
-    version: b6b69864d569bc1917ff500f14b91861a63e89a9
-  when: sro_image_tag == 'release-4.4'
 
 #- name: expose registry to outside
 #  shell: oc patch configs.imageregistry.operator.openshift.io/cluster --patch '{"spec":{"defaultRoute":true}}' --type=merge
@@ -79,22 +70,6 @@
     NAMESPACE: "{{ namespace }}"
     TAG: "{{ sro_image_tag }}"
   register: deploy_sro
-  when: sro_image_tag != 'release-4.4'
-
-# there seems to be a bug as of the last commit Jul 27, 2020, we use a specific commit that works
-- name: deploy sro
-  shell: make deploy
-  args:
-    chdir: /tmp/special-resource-operator
-  environment:
-    KUBECONFIG: /root/{{ cluster_id }}/auth/kubeconfig
-    PULLPOLICY: Always
-    REGISTRY: image-registry.openshift-image-registry.svc:5000
-    ORG: "{{ namespace }}"
-    NAMESPACE: "{{ namespace }}"
-    TAG: "b6b69864d569bc1917ff500f14b91861a63e89a9"
-  register: deploy_sro
-  when: sro_image_tag == 'release-4.4'
 
 - debug:
     msg: "{{ deploy_sro.stdout }}"
