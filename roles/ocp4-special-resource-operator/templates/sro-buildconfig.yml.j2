@@ -19,7 +19,7 @@ spec:
     - type: "ImageChange"
   source:
     git:
-      ref: {{ sro_image_tag }}
+      ref: {% if sro_image_tag == 'release-4.4' %}{{ sro_image_tag }}b6b69864d569bc1917ff500f14b91861a63e89a9{% else %}{{ sro_image_tag }}{% endif %}
       uri: {{ sro_git_url }}
     type: Git
   strategy:
@@ -29,4 +29,4 @@ spec:
   output:
     to:
       kind: ImageStreamTag
-      name: {{ sro_image_name }}:{{ sro_image_tag }}
+      name: {{ sro_image_name }}:{% if sro_image_tag == 'release-4.4' %}{{ sro_image_tag }}b6b69864d569bc1917ff500f14b91861a63e89a9{% else %}{{ sro_image_tag }}{% endif %}
