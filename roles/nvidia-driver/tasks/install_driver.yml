@@ -18,8 +18,8 @@
 - name: install xorg nvidia packages
   yum:
     name:
-      - xorg-x11-drv-nvidia
-      - xorg-x11-drv-nvidia-devel
+#      - xorg-x11-drv-nvidia
+#      - xorg-x11-drv-nvidia-devel
       - nvidia-driver-cuda
     state: present
   register: xorg_nvidia_packages
