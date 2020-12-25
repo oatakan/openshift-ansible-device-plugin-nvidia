@@ -57,6 +57,7 @@
     path: /tmp/special-resource-operator/recipes/nvidia-gpu/manifests/0000-state-driver-buildconfig.yaml
     regexp: '(\s+uri\: ).*?$'
     replace: '\1{{ sro_nvidia_driver_build_config_repo }}'
+  ignore_errors: yes
 
 - name: deploy sro
   shell: make deploy
