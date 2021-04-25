@@ -3,4 +3,4 @@
 ocp_base_version: "{{ ocp_version.split('.')[0] + '.' + ocp_version.split('.')[1] }}"
 
 # there seems to be a bug as of the last commit Jul 27, 2020, we use a specific commit that works for ocp 4.4
-sro_image_tag: "{{ 'b6b69864d569bc1917ff500f14b91861a63e89a9' if (ocp_base_version is version('4.4', '==')) else 'release-' + ocp_base_version }}"
+sro_image_tag: "{{ 'b6b69864d569bc1917ff500f14b91861a63e89a9' if (ocp_base_version is version('4.4', '>=')) else 'release-' + ocp_base_version }}"

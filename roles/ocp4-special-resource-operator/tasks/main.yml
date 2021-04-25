@@ -59,6 +59,13 @@
     replace: '\1{{ sro_nvidia_driver_build_config_repo }}'
   ignore_errors: yes
 
+- name: change nvidia-driver version
+  replace:
+    path: /tmp/special-resource-operator/recipes/nvidia-gpu/manifests/0000-state-driver-buildconfig.yaml
+    regexp: '(\s+value\: \")440.33.01(\".*?)$'
+    replace: '\1{{ nvidia_driver_version }}\2'
+  ignore_errors: yes
+
 - name: deploy sro
   shell: make deploy
   args:
