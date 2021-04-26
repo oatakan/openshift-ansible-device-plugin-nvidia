@@ -9,4 +9,4 @@ namespace: openshift-sro
 
 sro_nvidia_driver_build_config_repo: https://github.com/oatakan/openshift-nvidia-driver.git
 
-nvidia_driver_version: 460.73.01
+nvidia_driver_version: '460.73.01'

@@ -62,7 +62,7 @@
 - name: change nvidia-driver version
   replace:
     path: /tmp/special-resource-operator/recipes/nvidia-gpu/manifests/0000-state-driver-buildconfig.yaml
-    regexp: '(^.*)440\.33\.01(.*$)'
+    regexp: '(.+)440\.33\.01(.+)$'
     replace: '\1{{ nvidia_driver_version }}\2'
   ignore_errors: yes
 
