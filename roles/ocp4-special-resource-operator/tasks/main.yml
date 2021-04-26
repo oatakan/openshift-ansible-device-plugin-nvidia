@@ -63,7 +63,7 @@
   replace:
     path: /tmp/special-resource-operator/recipes/nvidia-gpu/manifests/0000-state-driver-buildconfig.yaml
     regexp: '(\s+value\: )\"440\.33\.01\".*?$'
-    replace: '\1\\"{{ sro_nvidia_driver_build_config_repo }}\\"'
+    replace: '\1"{{ nvidia_driver_version }}"'
   ignore_errors: yes
 
 - name: deploy sro
