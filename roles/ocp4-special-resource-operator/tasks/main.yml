@@ -74,6 +74,7 @@
     KUBECONFIG: /root/{{ cluster_id }}/auth/kubeconfig
     PULLPOLICY: Always
     REGISTRY: image-registry.openshift-image-registry.svc:5000
+    SPECIALRESOURCE: nvidia-gpu
     ORG: "{{ namespace }}"
     NAMESPACE: "{{ namespace }}"
     TAG: "{{ sro_image_tag }}"
