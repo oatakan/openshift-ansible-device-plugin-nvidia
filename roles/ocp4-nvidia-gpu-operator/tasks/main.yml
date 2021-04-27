@@ -24,7 +24,7 @@
     name: gpu-operator
     chart_ref: nvidia/gpu-operator
     chart_version: "{{ nvidia_gpu_operator_version }}"
-    release_namespace: default
+    release_namespace: "{{ gpu_operator_namespace }}"
     values: "{{ lookup('template', 'input_vars.yml') | from_yaml }}"
     update_repo_cache: yes
     kubeconfig: /root/{{ cluster_id }}/auth/kubeconfig
