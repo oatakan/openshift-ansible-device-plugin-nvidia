@@ -1,7 +1,12 @@
 ---
 
+- name: create namespace file
+  template:
+    src: namespace.yml.j2
+    dest: /root/{{ cluster_id }}/gpu-operator-namespace.yml
+
 - name: ensure namespace exists
-  shell: oc --kubeconfig auth/kubeconfig apply -f namespace.yml --wait
+  shell: oc --kubeconfig auth/kubeconfig apply -f gpu-operator-namespace.yml --wait
   args:
     chdir: /root/{{ cluster_id }}/
   register: ocp_gpu_namespace_create
