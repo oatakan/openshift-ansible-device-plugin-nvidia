@@ -1,0 +1,34 @@
+---
+
+- name: ensure namespace exists
+  shell: oc --kubeconfig auth/kubeconfig apply -f namespace.yml --wait
+  args:
+    chdir: /root/{{ cluster_id }}/
+  register: ocp_gpu_namespace_create
+  until: ocp_gpu_namespace_create is success
+  retries: 30
+  delay: 5
+
+- name: Add repo
+  community.kubernetes.helm_repository:
+    name: gpu-operator
+    repo_url: '{{ nvidia_gpu_operator_git_url }}'
+
+- name: deploy nvidia-gpu-operator
+  community.kubernetes.helm:
+    name: gpu-operator
+    chart_ref: nvidia/gpu-operator
+    chart_version: "{{ nvidia_gpu_operator_version }}"
+    release_namespace: default
+    values: "{{ lookup('template', 'input_vars.yml') | from_yaml }}"
+    kubeconfig: /root/{{ cluster_id }}/auth/kubeconfig
+  ignore_errors: yes
+
+- name: wait for nvidia-driver-validation pod
+  shell: oc --kubeconfig auth/kubeconfig get pod/nvidia-device-plugin-validation -n {{ gpu_operator_namespace }}
+  args:
+    chdir: /root/{{ cluster_id }}/
+  register: oc_get_driver_validation_pod
+  until: oc_get_driver_validation_pod is success
+  retries: 100
+  delay: 30

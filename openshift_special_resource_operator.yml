@@ -1,9 +1,18 @@
 - name: openshift install special resource operator
   hosts: '*openshift_helper'
   become: yes
+  collections:
+    - community.kubernetes
   vars:
     domain_suffix: nip.io
     cluster_id: ocp4dev
     provider: vmware
-  roles:
-    - ocp4-special-resource-operator
+    ocp_version: 4.7.0
+  tasks:
+    - include_role:
+        name: ocp4-special-resource-operator
+      when: ocp_version is version('4.7', '<') | default(false)
+
+    - include_role:
+        name: ocp4-nvidia-gpu-operator
+      when: ocp_version is version('4.7', '>=') | default(true)

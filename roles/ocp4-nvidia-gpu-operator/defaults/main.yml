@@ -1,0 +1,7 @@
+---
+
+ocp_version: 4.7.0
+gpu_operator_namespace: gpu-operator-resources
+
+nvidia_gpu_operator_git_url: https://nvidia.github.io/gpu-operator
+nvidia_gpu_operator_version: 1.6.2
