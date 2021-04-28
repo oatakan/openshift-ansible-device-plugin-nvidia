@@ -1,0 +1,15 @@
+---
+
+- name: create buildconfig file
+  template:
+    src: buildconfig.yml.j2
+    dest: /root/{{ cluster_id }}/gpu-driver-buildconfig.yml
+
+- name: apply buildconfig
+  shell: oc --kubeconfig auth/kubeconfig apply -f gpu-driver-buildconfig.yml -n "{{ namespace }}" --wait
+  args:
+    chdir: /root/{{ cluster_id }}/
+  register: ocp_buildconfig_create
+  until: ocp_buildconfig_create is success
+  retries: 30
+  delay: 5

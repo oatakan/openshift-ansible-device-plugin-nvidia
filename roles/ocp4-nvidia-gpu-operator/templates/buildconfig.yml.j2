@@ -1,0 +1,38 @@
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  labels:
+    app: driver
+  name: driver
+  namespace: "{{ gpu_operator_namespace }}"
+spec: {}
+---
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  labels:
+    app: driver
+  name: driver
+  namespace: "{{ gpu_operator_namespace }}"
+spec:
+  runPolicy: "Serial"
+  triggers:
+    - type: "ConfigChange"
+    - type: "ImageChange"
+  source:
+    git:
+      ref: master
+      uri: {{ nvidia_driver_build_config_repo }}
+    contextDir: fedora
+    type: Git
+  strategy:
+    type: Docker
+    dockerStrategy:
+      dockerfilePath: Dockerfile
+      buildArgs:
+        - name: "DRIVER_VERSION"
+          value: "{{ nvidia_driver_version }}"
+  output:
+    to:
+      kind: ImageStreamTag
+      name: driver:{{ nvidia_driver_version }}-fedora{{ fedora_release }}

@@ -1,0 +1,21 @@
+platform:
+  openshift: true
+operator:
+  validator:
+    version: vectoradd-cuda10.2-ubi8
+  defaultRuntime: crio
+nfd:
+  enabled: false
+devicePlugin:
+  version: v0.8.2-ubi8
+dcgmExporter:
+  version: 2.1.4-2.2.0-ubi8
+toolkit:
+  version: 1.4.7-ubi8
+{% if ocp_type == 'okd' %}
+driver:
+  repository: image-registry.openshift-image-registry.svc:5000/{{ gpu_operator_namespace }}
+  image: driver
+  version: "{{ nvidia_driver_version }}-fedora{{ fedora_release }}"
+  imagePullPolicy: Always
+{% endif %}

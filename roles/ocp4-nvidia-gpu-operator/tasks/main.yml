@@ -14,6 +14,9 @@
   retries: 30
   delay: 5
 
+- include_tasks: okd.yml
+  when: ocp_type == 'okd'
+
 - name: Add repo
   community.kubernetes.helm_repository:
     name: nvidia
@@ -25,7 +28,7 @@
     chart_ref: nvidia/gpu-operator
     chart_version: "{{ nvidia_gpu_operator_version }}"
     release_namespace: "{{ gpu_operator_namespace }}"
-    values: "{{ lookup('template', 'input_vars.yml') | from_yaml }}"
+    values: "{{ lookup('template', 'input_vars.yml.j2') | from_yaml }}"
     update_repo_cache: yes
     kubeconfig: /root/{{ cluster_id }}/auth/kubeconfig
   ignore_errors: yes
