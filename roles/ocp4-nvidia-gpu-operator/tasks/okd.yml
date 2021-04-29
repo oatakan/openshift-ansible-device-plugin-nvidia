@@ -6,7 +6,7 @@
     dest: /root/{{ cluster_id }}/gpu-driver-buildconfig.yml
 
 - name: apply buildconfig
-  shell: oc --kubeconfig auth/kubeconfig apply -f gpu-driver-buildconfig.yml -n "{{ namespace }}" --wait
+  shell: oc --kubeconfig auth/kubeconfig apply -f gpu-driver-buildconfig.yml -n "{{ gpu_operator_namespace }}" --wait
   args:
     chdir: /root/{{ cluster_id }}/
   register: ocp_buildconfig_create
