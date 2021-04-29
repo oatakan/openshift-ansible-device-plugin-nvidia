@@ -1,0 +1,2 @@
+---
+fedora_release: "{{ okd_coreos_version.split('.')[0] | default('33') }}"
