@@ -16,6 +16,6 @@ toolkit:
 driver:
   repository: image-registry.openshift-image-registry.svc:5000/{{ gpu_operator_namespace }}
   image: driver
-  version: "{{ nvidia_driver_version }}-fedora{{ fedora_release }}"
+  version: "{{ nvidia_driver_version }}"
   imagePullPolicy: Always
 {% endif %}
