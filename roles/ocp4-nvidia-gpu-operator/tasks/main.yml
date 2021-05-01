@@ -41,7 +41,7 @@
   until:
     - oc_get_driver_validation_pod is success
     - oc_get_driver_validation_pod.stdout == 'Succeeded' or oc_get_driver_validation_pod.stdout == 'Failed'
-  retries: 100
+  retries: 50
   delay: 30
 
 - name: validation status
