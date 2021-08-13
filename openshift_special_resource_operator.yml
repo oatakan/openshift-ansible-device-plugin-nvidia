@@ -2,7 +2,7 @@
   hosts: '*openshift_helper'
   become: yes
   collections:
-    - community.kubernetes
+    - kubernetes.core
   vars:
     domain_suffix: nip.io
     cluster_id: ocp4dev
