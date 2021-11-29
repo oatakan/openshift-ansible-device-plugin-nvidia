@@ -33,17 +33,28 @@
     kubeconfig: /root/{{ cluster_id }}/auth/kubeconfig
   ignore_errors: yes
 
-- name: wait for nvidia-driver-validation pod
-  shell: oc --kubeconfig auth/kubeconfig get pod/nvidia-device-plugin-validation -n {{ gpu_operator_namespace }} -o jsonpath='{.status.phase}'
+- name: wait for nvidia-driver-validator pod to be created
+  shell: oc --kubeconfig auth/kubeconfig get pods -o custom-columns=POD:.metadata.name --no-headers -n {{ gpu_operator_namespace }} | grep nvidia-device-plugin-valid* | head -1
   args:
     chdir: /root/{{ cluster_id }}/
-  register: oc_get_driver_validation_pod
+  register: oc_get_driver_validator_pod_name
   until:
-    - oc_get_driver_validation_pod is success
-    - oc_get_driver_validation_pod.stdout == 'Succeeded' or oc_get_driver_validation_pod.stdout == 'Failed'
+    - oc_get_driver_validator_pod_name is success
+    - oc_get_driver_validator_pod_name.stdout != ''
   retries: 50
   delay: 30
 
-- name: validation status
+- name: wait for nvidia-driver-validator pod to finish
+  shell: oc --kubeconfig auth/kubeconfig get pod/{{ oc_get_driver_validator_pod_name.stdout }} -n {{ gpu_operator_namespace }} -o jsonpath='{.status.phase}'
+  args:
+    chdir: /root/{{ cluster_id }}/
+  register: oc_get_driver_validator_pod
+  until:
+    - oc_get_driver_validator_pod is success
+    - oc_get_driver_validator_pod.stdout == 'Succeeded' or oc_get_driver_validator_pod.stdout == 'Failed'
+  retries: 50
+  delay: 30
+
+- name: drive validator status
   debug:
-    msg: "Driver validation status: {{ oc_get_driver_validation_pod.stdout }}"
+    msg: "Driver validator status: {{ oc_get_driver_validator_pod.stdout }}"
