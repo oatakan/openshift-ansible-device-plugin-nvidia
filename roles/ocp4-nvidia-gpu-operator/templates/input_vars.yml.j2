@@ -1,3 +1,4 @@
+{% if ocp_version is version('4.7', '==') %}
 platform:
   openshift: true
 operator:
@@ -12,6 +13,7 @@ dcgmExporter:
   version: 2.1.4-2.2.0-ubi8
 toolkit:
   version: 1.4.7-ubi8
+{% endif %}
 {% if ocp_type == 'okd' %}
 driver:
   repository: image-registry.openshift-image-registry.svc:5000/{{ gpu_operator_namespace }}
