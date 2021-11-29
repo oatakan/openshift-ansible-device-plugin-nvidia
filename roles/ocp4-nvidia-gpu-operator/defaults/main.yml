@@ -7,6 +7,6 @@ gpu_operator_namespace: gpu-operator-resources
 nvidia_driver_build_config_repo: https://github.com/oatakan/openshift-nvidia-driver.git
 
 nvidia_gpu_operator_git_url: https://nvidia.github.io/gpu-operator
-nvidia_gpu_operator_version: 1.9.0-beta
+nvidia_gpu_operator_version: 1.8.2
 
 nvidia_driver_version: '460.32.03'
