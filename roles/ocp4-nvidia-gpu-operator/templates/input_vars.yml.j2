@@ -1,6 +1,6 @@
-{% if ocp_version is version('4.7', '==') %}
 platform:
   openshift: true
+{% if ocp_version is version('4.7', '==') %}
 operator:
   validator:
     version: vectoradd-cuda10.2-ubi8
