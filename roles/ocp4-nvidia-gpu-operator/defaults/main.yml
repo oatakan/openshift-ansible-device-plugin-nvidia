@@ -3,6 +3,7 @@
 ocp_version: 4.7.0
 ocp_type: enterprise
 gpu_operator_namespace: nvidia-gpu-operator
+gpu_operator_version: v1.10
 
 nvidia_driver_build_config_repo: https://github.com/oatakan/openshift-nvidia-driver.git
 

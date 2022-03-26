@@ -1,2 +1,4 @@
 ---
+
+ocp_base_version: "{{ ocp_version.split('.')[0] + '.' + ocp_version.split('.')[1] }}"
 fedora_release: "{{ okd_coreos_version.split('.')[0] | default('33') }}"

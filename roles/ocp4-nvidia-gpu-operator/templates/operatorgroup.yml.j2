@@ -1,0 +1,8 @@
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  name: nvidia-gpu-operator-group
+  namespace: {{ gpu_operator_namespace }}
+spec:
+ targetNamespaces:
+ - {{ gpu_operator_namespace }}
