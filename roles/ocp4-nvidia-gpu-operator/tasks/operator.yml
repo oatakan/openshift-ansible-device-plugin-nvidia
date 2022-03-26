@@ -47,7 +47,7 @@
   register: oc_get_install_plan
   until:
     - oc_get_install_plan is success
-    - (oc_get_install_plan.stdout | from_json).items | length > 0
+    - ((oc_get_install_plan.stdout | from_json).items | default([])) | length > 0
     - not (oc_get_install_plan.stdout | from_json).items[0].spec.approved
     - starting_csv in (oc_get_install_plan.stdout | from_json).items[0].spec.clusterServiceVersionNames
   retries: 50
