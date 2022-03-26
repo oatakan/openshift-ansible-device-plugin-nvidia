@@ -56,7 +56,7 @@
   shell: oc --kubeconfig auth/kubeconfig patch installplan {{ install_plan }} -n {{ gpu_operator_namespace }} --type merge --patch '{"spec":{"approved":true }}'
   args:
     chdir: /root/{{ cluster_id }}/
-  when: installplan != ''
+  when: install_plan != ''
   vars:
     install_plan: '{{ (oc_get_install_plan.stdout | from_json).metadata.name | default("") }}'
 
