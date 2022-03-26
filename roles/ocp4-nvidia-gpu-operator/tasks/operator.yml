@@ -1,12 +1,9 @@
 ---
 
-- name: copy files
+- name: copy operatorgroup
   template:
-    src: '{{ item }}.j2'
-    dest: /root/{{ cluster_id }}/{{ item }}
-  loop:
-    - operatorgroup.yml
-    - sub.yml
+    src: operatorgroup.yml.j2
+    dest: /root/{{ cluster_id }}/operatorgroup.yml
 
 - name: create operatorgroup
   shell: oc --kubeconfig auth/kubeconfig apply -f operatorgroup.yml --wait
@@ -32,6 +29,11 @@
 - name: set starting csv
   set_fact:
     starting_csv: "{{ get_starting_csv.stdout | default('gpu-operator-certified.v' + gpu_operator_version + '.0') }}"
+
+- name: copy subscription
+  template:
+    src: sub.yml.j2
+    dest: /root/{{ cluster_id }}/sub.yml
 
 - name: create subscription
   shell: oc --kubeconfig auth/kubeconfig apply -f sub.yml --wait
