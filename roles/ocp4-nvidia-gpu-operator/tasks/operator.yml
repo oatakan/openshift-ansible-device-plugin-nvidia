@@ -21,7 +21,7 @@
     gpu_channel: "{{ get_gpu_channel.stdout | default(gpu_operator_version) }}"
 
 - name: get starting csv
-  shell: oc --kubeconfig auth/kubeconfig packagemanifests/gpu-operator-certified -n openshift-marketplace -ojson | jq -r '.status.channels[] | select(.name == "{{ gpu_channel }}") | .currentCSV'
+  shell: oc --kubeconfig auth/kubeconfig get packagemanifests/gpu-operator-certified -n openshift-marketplace -ojson | jq -r '.status.channels[] | select(.name == "{{ gpu_channel }}") | .currentCSV'
   args:
     chdir: /root/{{ cluster_id }}/
   register: get_starting_csv
