@@ -64,6 +64,10 @@
   shell: oc --kubeconfig auth/kubeconfig get csv -n {{ gpu_operator_namespace }} {{ starting_csv }} -ojsonpath={.metadata.annotations.alm-examples} | jq .[0] > clusterpolicy.json
   args:
     chdir: /root/{{ cluster_id }}/
+  register: get_cluster_policy
+  until: get_cluster_policy is success
+  retries: 50
+  delay: 10
 
 - name: create clusterpolicy
   shell: oc --kubeconfig auth/kubeconfig apply -f clusterpolicy.json --wait
