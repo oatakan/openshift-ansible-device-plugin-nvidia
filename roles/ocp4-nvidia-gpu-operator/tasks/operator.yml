@@ -47,7 +47,6 @@
   register: oc_get_install_plan
   until:
     - oc_get_install_plan is success
-    - not (oc_get_install_plan.stdout | from_json).spec.approved
     - starting_csv in (oc_get_install_plan.stdout | from_json).spec.clusterServiceVersionNames
   retries: 50
   delay: 10
