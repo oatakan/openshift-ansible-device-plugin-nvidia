@@ -64,7 +64,9 @@
   args:
     chdir: /root/{{ cluster_id }}/
   register: get_cluster_policy
-  until: get_cluster_policy is success
+  until:
+    - get_cluster_policy is success
+    - get_cluster_policy.stderr is undefined or get_cluster_policy.stderr == ''
   retries: 50
   delay: 10
 
