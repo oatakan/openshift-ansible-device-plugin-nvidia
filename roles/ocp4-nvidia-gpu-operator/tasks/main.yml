@@ -19,12 +19,12 @@
 
 - include_tasks: helm.yml
   when:
-    - ocp_type == 'enterprise'
+#    - ocp_type == 'enterprise'
     - ocp_version is version('4.10', '<')
 
 - include_tasks: operator.yml
   when:
-    - ocp_type == 'enterprise'
+#    - ocp_type == 'enterprise'
     - ocp_version is version('4.10', '>=')
 
 - name: wait for nvidia-driver-validator pod to be created
